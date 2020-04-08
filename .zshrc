@@ -13,7 +13,7 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/b
 export DISPLAY=localhost:0.0
 
 [[ ! -f "$HOME/.dircolors" ]] || eval "$(dircolors -b "$HOME/.dircolors" )" && zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-for config in ".zsh_aliases" ".zsh_ssh_aliases" ".zsh_functions" ".p10k.zsh"; do
+for config in ".zsh_aliases" ".p10k.zsh"; do
     [[ ! -f "$HOME/$config" ]] || source "$HOME/$config"
 done
 
