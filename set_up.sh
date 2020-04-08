@@ -18,6 +18,7 @@ fi
 [[ -z "$(which wget)" ]] && echo "wget not installed. Exiting..." && exit 1
 
 if [[ "$DO_PYTHON" = true ]]; then
+    echo "Installing miniconda3 & jupyter."
     # install anaconda3
     mkdir -p anaconda_install && cd anaconda_install
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -40,6 +41,7 @@ if [[ "$DO_PYTHON" = true ]]; then
 fi
 
 if [[ "$DO_ENV" = true ]]; then
+    echo "Installing ZSH environment."
     [[ -z "$(which zsh)"  ]] && echo "ZSH not installed. Exiting..." && exit 1
     [[ -z "$(which git)"  ]] && echo "git not installed. Exiting..." && exit 1
     # set up environment and shell
@@ -51,3 +53,5 @@ if [[ "$DO_ENV" = true ]]; then
     cp .p10k.zsh .zsh_aliases .zshrc $HOME
     [[ "$DO_PYTHON" = true ]] && conda init bash zsh
 fi
+
+echo "All selected components were installed."
