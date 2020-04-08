@@ -13,6 +13,7 @@ elif [[ "$1" = "env" ]]; then
 else
     echo "Supplied command line argument(s) [ $@ ] are invalid."
     exit 1
+fi
 
 [[ -z "$(which wget)" ]] && echo "wget not installed. Exiting..." && exit 1
 
