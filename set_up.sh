@@ -32,12 +32,16 @@ if [[ "$DO_PYTHON" = true ]]; then
     jupyter contrib nbextension install --sys-prefix
     jupyter nbextension enable rise --py --sys-prefix
     jupyter nbextension enable comment-uncomment/main
+    jupyter nbextension enable highlight_selected_word/main
     jupyter nbextension enable execute_time/ExecuteTime
     jupyter nbextension enable scroll_down/main
     jupyter nbextension enable code_prettify/autopep8
     jupyter nbextension enable varInspector/main
     jupyter nbextension enable rubberband/main
+    jupyter nbextension enable latex_envs/latex_envs
     jt -t oceans16 -tfs 14 -ofs 10 -f dejavu -cellw 95% -altmd -T
+    
+    conda init bash
 fi
 
 if [[ "$DO_ENV" = true ]]; then
@@ -46,12 +50,13 @@ if [[ "$DO_ENV" = true ]]; then
     [[ -z "$(which git)"  ]] && echo "git not installed. Exiting..." && exit 1
     # set up environment and shell
     mkdir -p $HOME/.ssh && cp .ssh/config $HOME/.ssh
+    mkdir -p $HOME/.config/htop && cp htoprc $HOME/.config/htop
     export CHSH=no
     sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-    cp .p10k.zsh .zsh_aliases .zshrc $HOME
-    [[ "$DO_PYTHON" = true ]] && conda init bash zsh
+    cp .p10k.zsh .zsh_aliases .zshrc .gitconfig $HOME
+    [[ "$DO_PYTHON" = true ]] && conda init zsh
 fi
 
 echo "All selected components were installed."

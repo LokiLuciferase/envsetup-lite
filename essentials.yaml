@@ -4,6 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - asciinema
   - awscli
   - autopep8
   - beautifulsoup4
@@ -13,16 +14,9 @@ dependencies:
   - cookiecutter
   - flake8
   - ipython
-  - ipython_genutils
-  - jupyter_client
-  - jupyter_contrib_core
   - jupyter_contrib_nbextensions
-  - jupyter_core
-  - jupyter_highlight_selected_word
-  - jupyter_latex_envs
   - jupyter_nbextensions_configurator
   - jupyterlab
-  - jupyterlab_server
   - jupyterthemes
   - lxml
   - m2r
@@ -46,9 +40,7 @@ dependencies:
   - seaborn
   - sphinx
   - sphinx-autodoc-typehints
-  - sqlite
   - tqdm
   - typeguard
   - urllib3
   - xlrd
-  - pip
