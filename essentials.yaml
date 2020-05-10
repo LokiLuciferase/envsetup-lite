@@ -14,6 +14,8 @@ dependencies:
   - cookiecutter
   - flake8
   - ipython
+  - ipywidgets
+  - jupyter
   - jupyter_contrib_nbextensions
   - jupyter_nbextensions_configurator
   - jupyterlab
