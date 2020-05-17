@@ -1,4 +1,4 @@
-name: anarchy2
+name: base
 channels:
   - bioconda
   - conda-forge
