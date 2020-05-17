@@ -1,4 +1,4 @@
-name: base
+name: anarchy2
 channels:
   - bioconda
   - conda-forge
@@ -36,7 +36,7 @@ dependencies:
   - pymysql
   - pytest
   - pytest-cov
-  - python=3.7
+  - python=3.8
   - rise
   - scipy
   - seaborn
