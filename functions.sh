@@ -42,12 +42,12 @@ function do_env_f {
 function do_docker_f {
     echo "Installing Docker..."
     apt-get update
-    apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+    apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common --yes
     apt-get remove docker docker-engine docker.io containerd runc
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     apt-get update
-    apt-get install docker-ce docker-ce-cli containerd.io
+    apt-get install docker-ce docker-ce-cli containerd.io --yes
     systemctl enable docker
     groupadd docker
     usermod -aG docker $SUDO_USER || true
@@ -66,8 +66,8 @@ function do_goofys_f {
 function do_various_f {
     echo "Installing various useful packages..."
     apt-get update
-    apt-get install libmysqlclient-dev rename pigz awscli progress tldr colordiff tmux
-    apt-get install ripgrep fzf || true # these might not exist in older ubuntu distros
+    apt-get install libmysqlclient-dev rename pigz awscli progress tldr colordiff tmux --yes
+    apt-get install ripgrep fzf --yes || true # these might not exist in older ubuntu distros
 }
 
 
@@ -80,7 +80,7 @@ function do_minimal_f {
 
 function do_extras_f {
     echo "Installing extra tooling..."
-    do_docker
-    do_goofys
-    do_various
+    do_docker_f
+    do_goofys_f
+    do_various_f
 }
