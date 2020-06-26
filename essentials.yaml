@@ -21,7 +21,6 @@ dependencies:
   - jupyterlab
   - jupyterthemes
   - lxml
-  - m2r
   - make
   - matplotlib
   - mysqlclient
@@ -45,4 +44,5 @@ dependencies:
   - tqdm
   - typeguard
   - urllib3
+  - vulture
   - xlrd
