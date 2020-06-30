@@ -41,6 +41,7 @@ dependencies:
   - seaborn
   - sphinx
   - sphinx-autodoc-typehints
+  - tabulate
   - tqdm
   - typeguard
   - urllib3
