@@ -67,7 +67,7 @@ function do_goofys_f {
 function do_various_f {
     echo "Installing various useful packages..."
     apt-get update
-    apt-get install libmysqlclient-dev rename pigz awscli progress tldr colordiff tmux --yes
+    apt-get install libmysqlclient-dev rename pigz awscli progress tldr colordiff tmux parallel --yes
     apt-get install ripgrep fzf --yes || true # these might not exist in older ubuntu distros
 }
 
