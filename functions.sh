@@ -79,7 +79,7 @@ function do_minimal_f {
 
     if [[ "$(arch)" = "aarch64" ]]; then
         echo "ARM environment detected."
-        apt-get install gfortran libopenblas-dev liblapack-dev
+        apt-get install gfortran rustc libopenblas-dev liblapack-dev
         apt-get install libfreetype6-dev pkg-config
     fi
 }
