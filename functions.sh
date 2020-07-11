@@ -75,7 +75,13 @@ function do_various_f {
 function do_minimal_f {
     echo "Installing minimal tooling..."
     apt-get update
-    apt-get install git zsh wget build-essential --yes    
+    apt-get install git zsh wget build-essential --yes
+
+    if [[ "$(arch)" = "aarch64" ]]; then
+        echo "ARM environment detected."
+        apt-get install gfortran libopenblas-dev liblapack-dev
+        apt-get install libfreetype6-dev pkg-config
+    fi
 }
 
 
