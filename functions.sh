@@ -40,6 +40,18 @@ function do_env_f {
 }
 
 
+function do_vim_f {
+    echo "Setting up Vim..."
+    if [[ -z "$(which conda)" ]]; then
+        echo "Conda not available. Will not get newly compiled vim."
+    else
+        conda install -c conda-forge vim --yes
+    fi
+    cp .vimrc $HOME
+    vim +VimEnter +silent +PlugInstall +qall
+}
+
+
 function do_docker_f {
     echo "Installing Docker..."
     apt-get update
