@@ -58,6 +58,7 @@ function do_env_f {
 function do_vim_f {
     echo "Setting up Vim..."
     try_conda_forge vim
+    [[ -z "$(which curl)" ]] && try_conda_forge curl
     [[ -z "$(which vim)" ]] && echo "Vim not installed." && return 1
     cp .vimrc $HOME
     vim +VimEnter +silent +PlugInstall +qall
