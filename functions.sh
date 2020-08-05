@@ -24,10 +24,25 @@ function do_python_f {
 }
 
 
+function try_conda_forge {
+    echo "Attempting to install $1 with conda."
+    [[ -z "$(which conda)" ]] && echo "Conda not installed." && return 1
+    conda install -c conda-forge "$1" --yes
+    if [[ "$?" -eq 0 ]]; then
+        return 0
+    else
+        echo "Could not install $1 with conda."
+        return 1
+    fi
+}
+
+
 function do_env_f {
     echo "Installing ZSH environment..."
-        [[ -z "$(which zsh)"  ]] && echo "ZSH not installed. Exiting..." && exit 1
-        [[ -z "$(which git)"  ]] && echo "git not installed. Exiting..." && exit 1
+        [[ -z "$(which zsh)" ]] && try_conda_forge zsh
+        [[ -z "$(which git)" ]] && try_conda_forge git
+        [[ -z "$(which zsh)" ]] && echo "ZSH not installed. Exiting..." && return 1
+        [[ -z "$(which git)" ]] && echo "git not installed. Exiting..." && return 1
         # set up environment and shell
         mkdir -p $HOME/.ssh && cp .ssh/config $HOME/.ssh
         mkdir -p $HOME/.config/htop && cp htoprc $HOME/.config/htop
@@ -42,11 +57,8 @@ function do_env_f {
 
 function do_vim_f {
     echo "Setting up Vim..."
-    if [[ -z "$(which conda)" ]]; then
-        echo "Conda not available. Will not get newly compiled vim."
-    else
-        conda install -c conda-forge vim --yes
-    fi
+    try_conda_forge vim
+    [[ -z "$(which vim)" ]] && echo "Vim not installed." && return 1
     cp .vimrc $HOME
     vim +VimEnter +silent +PlugInstall +qall
 }
