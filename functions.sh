@@ -96,7 +96,7 @@ function do_minimal_f {
 
 function do_extras_f {
     echo "Installing extra tooling..."
-    do_docker_f
-    do_goofys_f
-    do_various_f
+    do_docker_f || true
+    do_goofys_f || true
+    do_various_f || true
 }
