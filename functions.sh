@@ -87,7 +87,10 @@ function do_various_f {
 
 function do_minimal_f {
     echo "Installing minimal tooling..."
-    try_install_all git zsh wget g++ gcc make
+    ALL_MINIMAL=(git zsh wget make)
+    [[ -z "$CC" ]] && ALL_MINIMAL+=(gcc)
+    [[ -z "$CPP" ]] && ALL_MINIMAL+=(g++)
+    try_install_all $ALL_MINIMAL
 }
 
 
