@@ -89,7 +89,7 @@ function try_conda_forge {
 # try to install packages with package manager if privileges ok;
 # if fails or if no privs, try with conda forge.
 function try_install_cascade {
-    notfound=$(get_nonfound_cmds $@)
+    notfound=($(get_nonfound_cmds "$@"))
     [[ "${#notfound[@]}" -eq 0 ]] && return 0
     have_sudo && try_pkg_mngr $notfound && return 0
     have_conda && try_conda_forge $notfound && return 0
@@ -105,7 +105,7 @@ function try_install_all {
     try_install_cascade "$@"
     RV=$?
     if [[ "$2" != false ]]; then
-        notfound_again="$(get_nonfound_cmds $@)"
+        notfound_again=($(get_nonfound_cmds $@))
         [[ "${#notfound_again[@]}" -eq 0 ]] && return 0 || return 1
     fi
     return $RV
