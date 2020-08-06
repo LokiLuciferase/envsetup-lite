@@ -2,7 +2,7 @@ source driver_functions.sh
 
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
-    try_install_cascade wget || errmess "Wget not installed." && return 1
+    try_install_cascade wget || (errmess "Wget not installed." && return 1)
     # install anaconda3
     mkdir -p anaconda_install && cd anaconda_install
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -29,8 +29,8 @@ function do_python_f {
 
 function do_env_f {
     echo "Installing ZSH environment..."
-    try_install_cascade zsh || errmess "ZSH not installed." && return 1
-    try_install_cascade git || errmess "Git not installed." && return 1
+    try_install_cascade zsh || (errmess "ZSH not installed." && return 1)
+    try_install_cascade git || (errmess "Git not installed." && return 1)
     # set up environment and shell
     mkdir -p $HOME/.ssh && cp .ssh/config $HOME/.ssh
     mkdir -p $HOME/.config/htop && cp htoprc $HOME/.config/htop
@@ -45,9 +45,9 @@ function do_env_f {
 
 function do_vim_f {
     echo "Setting up Vim..."
-    try_install_cascade git  || errmess "Git not installed." && return 1
-    try_install_cascade curl || errmess "Curl not installed." && return 1
-    try_install_cascade vim  || errmess "Vim not installed." && return 1
+    try_install_cascade git  || (errmess "Git not installed." && return 1)
+    try_install_cascade curl || (errmess "Curl not installed." && return 1)
+    try_install_cascade vim  || (errmess "Vim not installed." && return 1)
     cp .vimrc $HOME
     vim +VimEnter +silent +PlugInstall +qall
 }
