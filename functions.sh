@@ -50,6 +50,7 @@ function do_vim_f {
     try_install_cascade vim  || (errmess "Vim not installed." && return 1)
     git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
     cp .vimrc $HOME
+    cp -r .SpaceVim.d $HOME
 }
 
 
