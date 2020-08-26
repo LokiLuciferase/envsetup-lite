@@ -53,6 +53,10 @@ python_file_head = [
   ]
 
 [[layers]]
+name = 'lang#c'
+enable = true
+
+[[layers]]
 name = 'lang#sh'
 enable = true
 
