@@ -31,6 +31,10 @@
 repo = "sickill/vim-monokai"
 merged = false
 
+[[custom_plugins]]
+repo = "mechatroner/rainbow_csv"
+merged = false
+
 [[layers]]
 name = 'autocomplete'
 enable = true
