@@ -27,12 +27,17 @@
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
 
+    
 [[custom_plugins]]
 repo = "sickill/vim-monokai"
 merged = false
 
 [[custom_plugins]]
 repo = "mechatroner/rainbow_csv"
+merged = false
+
+[[custom_plugins]]
+repo = "cespare/vim-toml"
 merged = false
 
 [[layers]]
