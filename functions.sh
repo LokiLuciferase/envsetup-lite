@@ -67,7 +67,7 @@ function do_docker_f {
     $SUDO_PREFIX apt-get install docker-ce docker-ce-cli containerd.io --yes
     $SUDO_PREFIX systemctl enable docker
     $SUDO_PREFIX groupadd docker
-    $SUDO_PREFIX usermod -aG docker $SUDO_USER || true
+    $SUDO_PREFIX usermod -aG docker $USER || true
 }
 
 
@@ -76,7 +76,7 @@ function do_goofys_f {
     GOOFYS_VERSION="v0.24.0"
     wget "https://github.com/kahing/goofys/releases/download/${GOOFYS_VERSION}/goofys"
     chmod +x goofys
-    mv goofys "$(get_bin_dir)/goofys"
+    $SUDO_PREFIX mv goofys "$(get_bin_dir)/goofys"
 }
 
 

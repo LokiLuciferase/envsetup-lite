@@ -19,4 +19,4 @@ DO_EXTRAS="${DO_EXTRAS:-false}" # also install extra features such as Docker, go
 [[ "$DO_VIM" = true ]] && do_vim_f
 [[ "$DO_EXTRAS" = true ]] && do_minimal_f && do_extras_f
 
-[[ "$DO_ENV" = true ]] && echo "Running zsh now. To make this permanent, utilize /usr/bin/chsh." && exec zsh
+[[ "$DO_ENV" = true ]] && echo 'Running zsh now. To make this permanent, run: sudo /usr/bin/chsh -s $(which zsh) $USER' && exec zsh
