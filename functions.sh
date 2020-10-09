@@ -82,7 +82,7 @@ function do_goofys_f {
 
 function do_various_f {
     echo "Installing various useful packages..."
-    try_install_any libmysqlclient-dev rename pigz awscli progress tldr colordiff tmux parallel ripgrep fzf || true
+    try_install_any libmysqlclient-dev mysql-client rename pigz awscli progress tldr colordiff tmux parallel ripgrep fzf || true
 }
 
 
