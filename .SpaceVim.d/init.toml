@@ -40,6 +40,10 @@ merged = false
 repo = "cespare/vim-toml"
 merged = false
 
+[[custom_plugins]]
+repo = "LukeGoodsell/nextflow-vim"
+merged = false
+
 [[layers]]
 name = 'autocomplete'
 enable = true
@@ -56,10 +60,10 @@ default_height = 30
 name = 'lang#python'
 enable = true
 python_file_head = [
-      '#!/usr/bin/env python3',
-      '',
-      ''
-  ]
+    '#!/usr/bin/env python3',
+    '',
+    ''
+]
 
 [[layers]]
 name = 'lang#c'
@@ -68,6 +72,12 @@ enable = true
 [[layers]]
 name = 'lang#sh'
 enable = true
+bash_file_head = [
+    '#!/usr/bin/env bash',
+    'set -euo pipefail',
+    '',
+    ''
+]
 
 [[layers]]
 name = 'format'
