@@ -9,7 +9,7 @@ function do_python_f {
     bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
-    conda env update -f essentials.yaml
+    conda env update -f ${CONFIG_PATH}/essentials.yaml
     conda clean -a --yes
     # setup setup custom jupyter stuff and jupyterthemes
     jupyter contrib nbextension install --sys-prefix
