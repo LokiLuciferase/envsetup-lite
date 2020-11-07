@@ -25,6 +25,7 @@ function have_sudo {
     elif [[ "$USER" = 'root' ]]; then
         return 0
     elif [[ ! -z "$(groups $USER | grep sudo)" ]]; then
+        sudo true
         return 0
     else
         return 1
