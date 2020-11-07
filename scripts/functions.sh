@@ -51,7 +51,7 @@ function do_vim_f {
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
     git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
-    push ${CONFIG_PATH} || exit 1
+    pushd ${CONFIG_PATH} || exit 1
     cp .vimrc $HOME
     cp -r .SpaceVim.d $HOME
     popd

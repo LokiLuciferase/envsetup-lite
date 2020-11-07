@@ -18,10 +18,11 @@ if [[ "$DO_ALL" = true ]]; then
     ALLOW_SUDO=true
 fi
 
-# get paths
+# get paths and export additional config variables
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 export CONFIG_PATH="$DIR/config"
 export SCRIPT_PATH="$DIR/scripts"
+export DEBIAN_FRONTEND="noninteractive"
 
 # get functionality
 source "${SCRIPT_PATH}/functions.sh"
