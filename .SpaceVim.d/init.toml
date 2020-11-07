@@ -51,7 +51,8 @@ merged = false
 
 # Layers
 [[layers]]
-name = 'VersionControl'
+name = 'git'
+git-plugin = 'fugitive'
 enable = true
 
 [[layers]]
