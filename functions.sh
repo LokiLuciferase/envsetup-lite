@@ -39,7 +39,7 @@ function do_env_f {
     sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-    cp .p10k.zsh .zsh_aliases .zshrc .gitconfig .dircolors $HOME
+    cp .p10k.zsh .zsh_aliases .zsh_functions .zshrc .gitconfig .dircolors $HOME
 }
 
 
