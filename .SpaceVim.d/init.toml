@@ -87,7 +87,7 @@ enable = true
 [[layers]]
 name = 'lang#sh'
 enable = true
-bash_file_head = [
+bash-file-head = [
     '#!/usr/bin/env bash',
     'set -euo pipefail',
     '',
