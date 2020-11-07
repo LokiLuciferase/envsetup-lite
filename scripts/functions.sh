@@ -1,4 +1,4 @@
-source driver_functions.sh
+source "${SCRIPT_PATH}/driver_functions.sh"
 
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
@@ -32,6 +32,7 @@ function do_env_f {
     try_install_cascade zsh || (errmess "ZSH not installed." && return 1)
     try_install_cascade git || (errmess "Git not installed." && return 1)
     # set up environment and shell
+    pushd ${CONFIG_PATH} || exit 1
     mkdir -p $HOME/.ssh && cp .ssh/config $HOME/.ssh
     mkdir -p $HOME/.config/htop && cp htoprc $HOME/.config/htop
     export CHSH=no
@@ -40,6 +41,7 @@ function do_env_f {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
     cp .p10k.zsh .zsh_aliases .zsh_functions .zshrc .gitconfig .dircolors $HOME
+    popd
 }
 
 
@@ -47,10 +49,12 @@ function do_vim_f {
     echo "Setting up Vim..."
     try_install_cascade git  || (errmess "Git not installed." && return 1)
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
-    try_install_cascade vim  || (errmess "Vim not installed." && return 1)
+    try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
     git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
+    push ${CONFIG_PATH} || exit 1
     cp .vimrc $HOME
     cp -r .SpaceVim.d $HOME
+    popd
 }
 
 

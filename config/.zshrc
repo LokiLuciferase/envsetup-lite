@@ -5,7 +5,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
 DEFAULT_USER=$USER
-EDITOR=/usr/bin/vim
+EDITOR=vim
 plugins=(git)
 [[ -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]] && plugins+=(zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
