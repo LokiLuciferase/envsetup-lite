@@ -34,10 +34,6 @@ repo = "Xuyuanp/nerdtree-git-plugin"
 merged = false
 
 [[custom_plugins]]
-repo = "airblade/vim-gitgutter"
-merged = false
-
-[[custom_plugins]]
 repo = "sickill/vim-monokai"
 merged = false
 
@@ -56,6 +52,10 @@ merged = false
 # Layers
 [[layers]]
 name = 'VersionControl'
+enable = true
+
+[[layers]]
+name = 'debug'
 enable = true
 
 [[layers]]
