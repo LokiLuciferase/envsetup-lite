@@ -27,7 +27,16 @@
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
 
-    
+
+# Custom plugins
+[[custom_plugins]]
+repo = "Xuyuanp/nerdtree-git-plugin"
+merged = false
+
+[[custom_plugins]]
+repo = "airblade/vim-gitgutter"
+merged = false
+
 [[custom_plugins]]
 repo = "sickill/vim-monokai"
 merged = false
@@ -43,6 +52,11 @@ merged = false
 [[custom_plugins]]
 repo = "LukeGoodsell/nextflow-vim"
 merged = false
+
+# Layers
+[[layers]]
+name = 'VersionControl'
+enable = true
 
 [[layers]]
 name = 'autocomplete'
