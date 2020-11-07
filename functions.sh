@@ -22,7 +22,7 @@ function do_python_f {
     jupyter nbextension enable varInspector/main
     jupyter nbextension enable rubberband/main
     jupyter nbextension enable latex_envs/latex_envs
-    jt -t oceans16 -tfs 14 -ofs 10 -f dejavu -cellw 95% -altmd -T
+    jt -t chesterish -tfs 14 -ofs 10 -f dejavu -cellw 95% -altmd -T
     conda init bash
 }
 
