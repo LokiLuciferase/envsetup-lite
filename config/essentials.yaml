@@ -24,9 +24,6 @@ dependencies:
   - make
   - matplotlib
   - mysqlclient
-  - nbconvert
-  - nbformat
-  - ncurses
   - notebook
   - numpy
   - openpyxl
