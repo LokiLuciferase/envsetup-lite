@@ -61,7 +61,7 @@ function try_pkg_mngr {
     SUDO_PREFIX=$(get_sudo_prefix)
     if [[ "$PKG_MNGR" = 'apt-get' ]]; then
         pkg_mngr_update
-        $SUDO_PREFIX apt-get install $@ --yes
+        DEBIAN_FRONTEND=noninteractive $SUDO_PREFIX apt-get install $@ --yes
     elif [[ "$PKG_MNGR" = 'yum' ]]; then
         pkg_mngr_update
         $SUDO_PREFIX yum -y install $@
