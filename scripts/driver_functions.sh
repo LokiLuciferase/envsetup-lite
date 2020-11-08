@@ -1,3 +1,5 @@
+DEBIAN_FRONTEND=noninteractive
+
 function errmess {
     echo "$@" 1>&2
 }
