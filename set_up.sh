@@ -23,7 +23,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 export CONFIG_PATH="$DIR/config"
 export SCRIPT_PATH="$DIR/scripts"
 export DEBIAN_FRONTEND="noninteractive"
-
+export TZ=Europe/Vienna
 # get functionality
 source "${SCRIPT_PATH}/functions.sh"
 
