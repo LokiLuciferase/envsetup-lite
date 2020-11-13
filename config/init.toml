@@ -1,0 +1,88 @@
+[options]
+    colorscheme = "onedark"
+    colorscheme_bg = "dark"
+    enable_guicolors = true
+    statusline_separator = "arrow"
+    statusline_inactive_separator = "arrow"
+    buffer_index_type = 4
+    enable_tabline_filetype_icon = true
+    default_indent = 4
+    enable_statusline_mode = false
+    filemanager = "nerdtree"
+    bootstrap_before = "myspacevim#before"
+    bootstrap_after = "myspacevim#after"
+
+
+# Custom plugins
+[[custom_plugins]]
+repo = "Xuyuanp/nerdtree-git-plugin"
+merged = false
+
+[[custom_plugins]]
+repo = "mechatroner/rainbow_csv"
+merged = false
+
+[[custom_plugins]]
+repo = "cespare/vim-toml"
+merged = false
+
+[[custom_plugins]]
+repo = "LukeGoodsell/nextflow-vim"
+merged = false
+
+# Layers
+[[layers]]
+name = 'git'
+git-plugin = 'fugitive'
+enable = true
+
+[[layers]]
+name = 'debug'
+enable = true
+
+[[layers]]
+name = 'autocomplete'
+enable = true
+auto_completion_return_key_behavior = "complete"
+auto_completion_tab_key_behavior = "smart"
+
+[[layers]]
+name = 'shell'
+enable = true
+default_position = 'top'
+default_height = 30
+
+[[layers]]
+name = 'lang#python'
+enable = true
+python_file_head = [
+    '#!/usr/bin/env python3',
+    '',
+    ''
+]
+
+[[layers]]
+name = 'lang#c'
+enable = true
+
+[[layers]]
+name = 'lang#sh'
+enable = true
+bash-file-head = [
+    '#!/usr/bin/env bash',
+    'set -euo pipefail',
+    '',
+    ''
+]
+
+[[layers]]
+name = 'format'
+enable = true
+
+[[layers]]
+name = 'edit'
+enable = true
+
+[[layers]]
+name = 'colorscheme'
+enable = true
