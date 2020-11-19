@@ -30,6 +30,10 @@ merged = false
 repo = "LukeGoodsell/nextflow-vim"
 merged = false
 
+[[custom_plugins]]
+repo = "psf/black"
+merged = false
+
 # Layers
 [[layers]]
 name = 'git'
@@ -63,6 +67,14 @@ python_file_head = [
 
 [[layers]]
 name = 'lang#c'
+enable = true
+
+[[layers]]
+name = 'lang#rust'
+enable = true
+
+[[layers]]
+name = 'lang#haskell'
 enable = true
 
 [[layers]]
