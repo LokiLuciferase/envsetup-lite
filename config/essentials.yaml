@@ -4,7 +4,6 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - asciinema
   - awscli
   - autopep8
   - beautifulsoup4
@@ -13,13 +12,6 @@ dependencies:
   - click
   - cookiecutter
   - flake8
-  - ipython
-  - ipywidgets
-  - jupyter
-  - jupyter_contrib_nbextensions
-  - jupyter_nbextensions_configurator
-  - jupyterlab
-  - jupyterthemes
   - lxml
   - make
   - matplotlib
@@ -33,7 +25,6 @@ dependencies:
   - pytest
   - pytest-cov
   - python=3.8
-  - rise
   - scipy
   - seaborn
   - sphinx
@@ -44,3 +35,14 @@ dependencies:
   - urllib3
   - vulture
   - xlrd
+  - pip:  # move packages failing on arm64/miniforge3 to pip
+    - asciinema
+    - rise
+    - jupyter_contrib_nbextensions
+    - jupyter_nbextensions_configurator
+    - ipython
+    - ipywidgets
+    - jupyter
+    - jupyterlab
+    - jupyterthemes
+  

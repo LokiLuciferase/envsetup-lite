@@ -17,6 +17,10 @@ function get_nonfound_cmds {
     echo "$NOTFOUND"
 }
 
+function get_arch {
+    dpkg --print-architecture || echo "amd64"
+}
+
 function have_conda {
     have_cmd conda && return 0 || return 1
 }

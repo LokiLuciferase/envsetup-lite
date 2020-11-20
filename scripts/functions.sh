@@ -3,10 +3,16 @@ source "${SCRIPT_PATH}/driver_functions.sh"
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
     try_install_cascade wget || (errmess "Wget not installed." && return 1)
-    # install anaconda3
+    if [[ "$(get_arch)" = "amd64" ]]; then
+        DLPATH="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+    elif [[ "$(get_arch)" = "arm64" ]]; then
+        DLPATH="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
+    else
+        echo "Unknown architecture: $(get_arch)" && exit 1
+    fi
+    # install miniconda3 or miniforge3
     mkdir -p anaconda_install && cd anaconda_install
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
+    bash $DLPATH -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
     conda env update -f ${CONFIG_PATH}/essentials.yaml
