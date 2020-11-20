@@ -12,7 +12,8 @@ function do_python_f {
     fi
     # install miniconda3 or miniforge3
     mkdir -p anaconda_install && cd anaconda_install
-    bash $DLPATH -b -p $HOME/miniconda3
+    wget $DLPATH -O conda.sh
+    bash conda.sh -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
     conda env update -f ${CONFIG_PATH}/essentials.yaml
