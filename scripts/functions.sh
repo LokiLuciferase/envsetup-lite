@@ -3,10 +3,17 @@ source "${SCRIPT_PATH}/driver_functions.sh"
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
     try_install_cascade wget || (errmess "Wget not installed." && return 1)
-    # install anaconda3
+    if [[ "$(get_arch)" = "amd64" ]]; then
+        DLPATH="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+    elif [[ "$(get_arch)" = "arm64" ]]; then
+        DLPATH="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
+    else
+        echo "Unknown architecture: $(get_arch)" && exit 1
+    fi
+    # install miniconda3 or miniforge3
     mkdir -p anaconda_install && cd anaconda_install
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
+    wget $DLPATH -O conda.sh
+    bash conda.sh -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
     conda env update -f ${CONFIG_PATH}/essentials.yaml
@@ -40,7 +47,7 @@ function do_env_f {
     sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-    cp .p10k.zsh .zsh_aliases .zsh_functions .zshrc .gitconfig .dircolors $HOME
+    cp .p10k.zsh .zsh_aliases .common_env_variables .zsh_functions .zshrc .gitconfig .dircolors $HOME
     popd
 }
 

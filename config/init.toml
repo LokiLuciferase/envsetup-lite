@@ -30,10 +30,6 @@ merged = false
 repo = "LukeGoodsell/nextflow-vim"
 merged = false
 
-[[custom_plugins]]
-repo = "psf/black"
-merged = false
-
 # Layers
 [[layers]]
 name = 'git'
@@ -70,14 +66,6 @@ name = 'lang#c'
 enable = true
 
 [[layers]]
-name = 'lang#rust'
-enable = true
-
-[[layers]]
-name = 'lang#haskell'
-enable = true
-
-[[layers]]
 name = 'lang#sh'
 enable = true
 bash-file-head = [
@@ -89,6 +77,10 @@ bash-file-head = [
 
 [[layers]]
 name = 'format'
+enable = true
+
+[[layers]]
+name = 'edit'
 enable = true
 
 [[layers]]
