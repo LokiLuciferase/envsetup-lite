@@ -14,6 +14,5 @@ alias hgrep='history|grep'
 alias trace='tail -f -n100000'
 alias mkdir='mkdir -pv'
 alias svim='vim -u ~/.SpaceVim/vimrc'
-alias vim='nvim'
-alias nano='nvim'
+alias nano='vim'
 
