@@ -13,6 +13,8 @@ alias dush='du -ahd1 | sort -h'
 alias hgrep='history|grep'
 alias trace='tail -f -n100000'
 alias mkdir='mkdir -pv'
-alias svim='vim -u ~/.SpaceVim/vimrc'
-alias nano='vim'
 
+[[ "$(which nvim)" != "" ]] && VIM_BIN='nvim' || VIM_BIN='vim'
+alias svim="${VIM_BIN} -u ~/.SpaceVim/vimrc"
+alias nano="${VIM_BIN}"
+alias vim="${VIM_BIN}"
