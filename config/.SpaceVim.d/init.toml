@@ -92,5 +92,9 @@ name = 'format'
 enable = true
 
 [[layers]]
+name = 'edit'
+enable = true
+
+[[layers]]
 name = 'colorscheme'
 enable = true
