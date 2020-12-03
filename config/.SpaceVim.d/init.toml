@@ -23,6 +23,10 @@ repo = "mechatroner/rainbow_csv"
 merged = false
 
 [[custom_plugins]]
+repo = "bioSyntax/bioSyntax-vim"
+merged = false
+
+[[custom_plugins]]
 repo = "cespare/vim-toml"
 merged = false
 

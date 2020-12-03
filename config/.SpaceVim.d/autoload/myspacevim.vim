@@ -10,6 +10,7 @@ function! myspacevim#before() abort
     set mouse=
     set clipboard=unnamed
     autocmd BufNewFile,BufRead *.config set ft=nextflow
+    autocmd BufNewFile,BufRead *.{fna,faa,ffn,fa} set ft=fasta
 endfunction
 
 function! myspacevim#after() abort
