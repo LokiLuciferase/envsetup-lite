@@ -16,9 +16,9 @@ source $ZSH/oh-my-zsh.sh
 
 # load all found config files
 CONFIG_FILES=( 
-    ".zsh_aliases"  # aliases
-    ".zsh_functions"  # functions
     ".common_env_variables"  # environment variables
+    ".zsh_functions"  # functions
+    ".zsh_aliases"  # aliases
     ".p10k.zsh"  # powerlevel10k setup
 )
 for config in "${CONFIG_FILES[@]}" ; do

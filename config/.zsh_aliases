@@ -18,3 +18,6 @@ alias mkdir='mkdir -pv'
 alias svim="${VIM_BIN} -u ~/.SpaceVim/vimrc"
 alias nano="${VIM_BIN}"
 alias vim="${VIM_BIN}"
+
+[[ "$(which spip)" != "" ]] && alias pip=spip
+
