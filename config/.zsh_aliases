@@ -18,6 +18,14 @@ alias mkdir='mkdir -pv'
 alias svim="${VIM_BIN} -u ~/.SpaceVim/vimrc"
 alias nano="${VIM_BIN}"
 alias vim="${VIM_BIN}"
+alias ed="echo 'fuck off'"
 
 [[ "$(which spip)" != "" ]] && alias pip=spip
+
+##silly
+alias mansplain='man'
+alias leckmiamoasch='echo "trottl"'
+alias please='sudo '
+alias fucking='sudo '
+alias get-rekt="sudo apt update && sudo apt upgrade --yes"
 
