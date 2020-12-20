@@ -21,6 +21,7 @@ dependencies:
   - openpyxl
   - pandas>=1.0
   - pip>=20
+  - pre-commit
   - pymysql
   - pytest
   - pytest-cov
