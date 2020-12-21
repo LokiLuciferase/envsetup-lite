@@ -2,8 +2,8 @@
 	; name = Lukas Lüftinger
 	; email = lukas.lueftinger@outlook.com
 [alias]
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lol = log --graph --pretty=format:'%C(auto)%h%d%Creset %C(cyan)(%cr)%Creset %C(green)%cn <%ce>%Creset %s'
+    lola = log --graph --decorate --abbrev-commit --all --pretty=format:'%C(auto)%h%d%Creset %C(cyan)(%cr)%Creset %C(green)%cn%Creset %s'
 [color]
     branch = auto
     diff = auto
