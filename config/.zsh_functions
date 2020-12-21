@@ -11,11 +11,12 @@ function asciinema-upload {
 
 function spip {
     # Safe pip: refuse to install stuff into the base conda environment.
+    CONDA_PREFIX=${CONDA_PREFIX:-'null'}
     CURRENV=$(basename ${CONDA_PREFIX})
     if [[ "$CURRENV" == "miniconda3" ]]; then
         echo "Cowardly refusing to mess up base conda environment."
     else
-        pip "$@"
+        \pip "$@"
     fi
 }
 
