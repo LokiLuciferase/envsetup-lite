@@ -21,6 +21,10 @@ function get_arch {
     dpkg --print-architecture || echo "amd64"
 }
 
+function running_in_docker {
+  awk -F/ '$2 == "docker"' /proc/self/cgroup | read
+}
+
 function have_conda {
     have_cmd conda && return 0 || return 1
 }

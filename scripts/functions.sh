@@ -39,16 +39,43 @@ function do_env_f {
     try_install_cascade zsh || (errmess "ZSH not installed." && return 1)
     try_install_cascade git || (errmess "Git not installed." && return 1)
     # set up environment and shell
-    pushd ${CONFIG_PATH} || exit 1
-    mkdir -p $HOME/.ssh && cp .ssh/config $HOME/.ssh
-    mkdir -p $HOME/.config/htop && cp htoprc $HOME/.config/htop
     export CHSH=no
     export RUNZSH=no
     sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-    cp .p10k.zsh .zsh_aliases .common_env_variables .zsh_functions .zshrc .gitconfig .dircolors $HOME
-    popd
+
+    # check if any of the to be installed things already exist
+    # if so, back them up
+    TARGET_LOCS=(
+        ${HOME}/.zshrc
+        ${HOME}/.zsh_aliases
+        ${HOME}/.zsh_functions
+        ${HOME}/.p10k.zsh
+        ${HOME}/.common_env_variables
+        ${HOME}/.ssh 
+        ${HOME}/.config/htop/htoprc
+        ${HOME}/.gitconfig
+        ${HOME}/.dircolors
+    )
+
+    REPO_LOCS=(
+        ${CONFIG_PATH}/zshrc
+        ${CONFIG_PATH}/zsh_aliases
+        ${CONFIG_PATH}/zsh_functions
+        ${CONFIG_PATH}/p10k.zsh
+        ${CONFIG_PATH}/common_env_variables
+        ${CONFIG_PATH}/ssh
+        ${CONFIG_PATH}/htoprc
+        ${CONFIG_PATH}/gitconfig
+        ${CONFIG_PATH}/dircolors
+    )
+    for i in "${!REPO_LOCS[@]}"; do
+        REPO="${REPO_LOCS[$i]}"
+        TARGET="${TARGET_LOCS[$i]}"
+        mkdir -p "$(dirname ${TARGET})"
+        cp -rS .bak "${REPO}" "${TARGET}"
+    done
 }
 
 
@@ -59,8 +86,8 @@ function do_vim_f {
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
     git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
     pushd ${CONFIG_PATH} || exit 1
-    cp .vimrc $HOME
-    cp -r .SpaceVim.d $HOME
+    cp vimrc $HOME/.vimrc
+    cp -r SpaceVim.d $HOME/.SpaceVim.d
     popd
 }
 
