@@ -54,18 +54,23 @@ function introduce_config_file {
             return 1
         fi
     fi
+    [[ -d $2 ]] && mv $2 "${2}.~1~"
     UNIFIED_CONFIG_DIR="${HOME}/.envsetup-lite.d"
     CONFIG_FILENAME="$(basename $1)"
     mkdir -p "$(dirname $2)"
     mkdir -p "${UNIFIED_CONFIG_DIR}"
+    rm -rf "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}"
     cp -r --backup=t "$1" "${UNIFIED_CONFIG_DIR}"
-    ln -s --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
+    ln -vs --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
 }
 
 function maybe_restore_config_file {
     # restore_config_file target_location
     LATEST_BACKUP_FILE=$(ls -d "$1".~*~ | sort | tail -1)
-    [[ -f "${LATEST_BACKUP_FILE}" ]] && mv "${LATEST_BACKUP_FILE}" $1 || true
+    if [[ -f "${LATEST_BACKUP_FILE}" ]]; then
+    [[ -d "${LATEST_BACKUP_FILE}" ]] && rm $1
+        mv -v "${LATEST_BACKUP_FILE}" $1 || true
+    fi
 }
 
 function get_bin_dir {
