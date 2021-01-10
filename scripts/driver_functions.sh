@@ -48,6 +48,12 @@ function get_sudo_prefix {
 
 function introduce_config_file {
     # introduce_config_file storage_location target_location
+    if [[ -d $2 || -f $2 ]]; then
+        if [[ "${UPDATE_BEHAVIOUR}" != "all" && "${UPDATE_BEHAVIOUR}" != "configs" ]]; then
+            errmess "Config $2 already exists."
+            return 1
+        fi
+    fi
     UNIFIED_CONFIG_DIR="${HOME}/.envsetup-lite.d"
     CONFIG_FILENAME="$(basename $1)"
     mkdir -p "$(dirname $2)"

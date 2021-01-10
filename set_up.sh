@@ -24,6 +24,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 export CONFIG_PATH="$DIR/config"
 export SCRIPT_PATH="$DIR/scripts"
 export DEBIAN_FRONTEND="noninteractive"
+export UPDATE_BEHAVIOUR="${UPDATE_BEHAVIOUR:-configs}"  # whether to update only config files. Others: "fail" and "all"
 
 # get functionality
 source "${SCRIPT_PATH}/functions.sh"

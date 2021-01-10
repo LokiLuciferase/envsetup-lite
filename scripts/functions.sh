@@ -2,6 +2,17 @@ source "${SCRIPT_PATH}/driver_functions.sh"
 
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
+    if [[ -d "${HOME}/miniconda3" ]]; then
+        if [[ "${UPDATE_BEHAVIOUR}" = "all" ]]; then
+            rm -rf ${HOME}/miniconda3
+        elif [[ "${UPDATE_BEHAVIOUR}" = "configs" ]]; then
+            errmess "${HOME}/miniconda3 already exists. Skipping python install."
+            return 0
+        else
+            errmess "${HOME}/miniconda3 already exists."
+            return 1
+        fi
+    fi
     try_install_cascade wget || (errmess "Wget not installed." && return 1)
     if [[ "$(get_arch)" = "amd64" ]]; then
         DLPATH="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -84,10 +95,8 @@ function do_vim_f {
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
     git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
-    pushd ${CONFIG_PATH} || exit 1
-    cp vimrc $HOME/.vimrc
-    cp -r SpaceVim.d $HOME/.SpaceVim.d
-    popd
+    introduce_config_file ${CONFIG_PATH}/vimrc ${HOME}/.vimrc
+    introduce_config_file ${CONFIG_PATH}/SpaceVim.d/ ${HOME}/.SpaceVim.d
 }
 
 
