@@ -94,7 +94,7 @@ function do_vim_f {
     try_install_cascade git  || (errmess "Git not installed." && return 1)
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
-    git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
+    [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
     introduce_config_file ${CONFIG_PATH}/vimrc ${HOME}/.vimrc
     introduce_config_file ${CONFIG_PATH}/SpaceVim.d/ ${HOME}/.SpaceVim.d
 }
@@ -128,7 +128,7 @@ function do_goofys_f {
 
 function do_various_f {
     echo "Installing various useful packages..."
-    try_install_any build-essential libmysqlclient-dev mysql-client rename pigz awscli progress tldr colordiff tmux parallel ripgrep fzf || true
+    try_install_any build-essential htop libmysqlclient-dev mysql-client rename pigz awscli progress tldr colordiff tmux parallel ripgrep fzf || true
 }
 
 
