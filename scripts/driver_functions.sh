@@ -46,6 +46,22 @@ function get_sudo_prefix {
     [[ "$USER" = 'root' ]] && echo "" || echo "sudo"
 }
 
+function introduce_config_file {
+    # introduce_config_file storage_location target_location
+    UNIFIED_CONFIG_DIR="${HOME}/.envsetup-lite.d"
+    CONFIG_FILENAME="$(basename $1)"
+    mkdir -p "$(dirname $2)"
+    mkdir -p "${UNIFIED_CONFIG_DIR}"
+    cp -r --backup=t "$1" "${UNIFIED_CONFIG_DIR}"
+    ln -s --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
+}
+
+function maybe_restore_config_file {
+    # restore_config_file target_location
+    LATEST_BACKUP_FILE=$(ls -d "$1".~*~ | sort | tail -1)
+    [[ -f "${LATEST_BACKUP_FILE}" ]] && mv "${LATEST_BACKUP_FILE}" $1 || true
+}
+
 function get_bin_dir {
     if [[ "$(have_sudo; echo $?)" -ne 1 ]]; then
         BIN_DIR=/usr/bin

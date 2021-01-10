@@ -14,7 +14,7 @@ RUN useradd -m testuser -s /bin/bash \
 USER testuser
 RUN whoami
 RUN sudo whoami
-RUN echo "Build date: 22/12/2020"
+RUN echo "Build date: 10/01/2020"
 RUN cd /home/testuser \
     && cp -r /opt/envsetup-lite . \
     && cd envsetup-lite \

@@ -34,5 +34,6 @@ source "${SCRIPT_PATH}/functions.sh"
 [[ "$DO_PYTHON" = true ]] && [[ "$DO_ENV" = true ]] && conda init zsh && export PATH=$HOME/miniconda3/bin:$PATH
 [[ "$DO_VIM" = true ]] && do_vim_f
 [[ "$DO_EXTRAS" = true ]] && do_minimal_f && do_extras_f
-[[ "$DO_ENV" = true  && "$RUN_ZSH" = true && "$(running_in_docker; echo $?)" -eq 1 ]] && echo 'Running zsh now. To make this permanent, run: sudo /usr/bin/chsh -s $(which zsh) $USER' && exec zsh
+running_in_docker && exit 0
+[[ "$DO_ENV" = true  && "$RUN_ZSH" = true ]] && echo 'Running zsh now. To make this permanent, run: sudo /usr/bin/chsh -s $(which zsh) $USER' && exec zsh
 

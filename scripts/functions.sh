@@ -73,8 +73,7 @@ function do_env_f {
     for i in "${!REPO_LOCS[@]}"; do
         REPO="${REPO_LOCS[$i]}"
         TARGET="${TARGET_LOCS[$i]}"
-        mkdir -p "$(dirname ${TARGET})"
-        cp -rS .bak "${REPO}" "${TARGET}"
+        introduce_config_file "${REPO}" "${TARGET}"
     done
 }
 
