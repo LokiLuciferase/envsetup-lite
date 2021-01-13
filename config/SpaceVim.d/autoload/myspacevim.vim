@@ -6,7 +6,6 @@ function! myspacevim#before() abort
     \ 'args': ['-q', '-', '-S', '-l', '100'],
     \ }
 	let g:neoformat_enabled_python = ['black']
-    autocmd VimEnter * silent NERDTree | wincmd p
     set mouse=
     set clipboard=unnamed
     autocmd BufNewFile,BufRead *.config set ft=nextflow
