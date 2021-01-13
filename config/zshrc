@@ -6,7 +6,7 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
 DEFAULT_USER=$USER
 EDITOR=vim
-plugins=(git)
+plugins=(vi-mode git)
 [[ -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]] && plugins+=(zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
