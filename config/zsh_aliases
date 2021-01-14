@@ -16,6 +16,7 @@ alias mkdir='mkdir -pv'
 
 [[ "$(which nvim)" != "" ]] && VIM_BIN='nvim' || VIM_BIN='vim'
 alias svim="${VIM_BIN} -u ~/.SpaceVim/vimrc"
+alias svimdiff='svim -d "$@"'
 alias nano="${VIM_BIN}"
 alias vim="${VIM_BIN}"
 alias ed="echo 'fuck off'"
