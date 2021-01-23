@@ -57,11 +57,17 @@ function introduce_config_file {
     [[ -d $2 ]] && mv $2 "${2}.~1~"
     UNIFIED_CONFIG_DIR="${HOME}/.envsetup-lite.d"
     CONFIG_FILENAME="$(basename $1)"
-    mkdir -p "$(dirname $2)"
     mkdir -p "${UNIFIED_CONFIG_DIR}"
     rm -rf "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}"
     cp -r --backup=t "$1" "${UNIFIED_CONFIG_DIR}"
-    ln -vs --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
+    if [[ "$2" != "" ]]; then
+        mkdir -p "$(dirname $2)"
+        ln -vs --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
+    fi
+}
+
+function introduce_config_file_if_not_exists {
+    UPDATE_BEHAVIOUR="no" introduce_config_file $1 $2 || true
 }
 
 function maybe_restore_config_file {

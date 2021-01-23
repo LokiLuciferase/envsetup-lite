@@ -1,0 +1,10 @@
+zshrc .zshrc
+functions.zsh
+aliases.zsh
+p10k.zsh
+env_vars.zsh
+htoprc .config/htop/htoprc
+ttrv.cfg .config/ttrv/ttrv.cfg
+gitconfig .gitconfig
+dircolors .dircolors
+

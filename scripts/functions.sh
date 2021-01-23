@@ -13,7 +13,7 @@ function do_python_f {
             return 1
         fi
     fi
-    try_install_cascade wget || (errmess "Wget not installed." && return 1)
+    try_install_cascade curl || (errmess "cURL not installed." && return 1)
     if [[ "$(get_arch)" = "amd64" ]]; then
         DLPATH="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     elif [[ "$(get_arch)" = "arm64" ]]; then
@@ -23,7 +23,7 @@ function do_python_f {
     fi
     # install miniconda3 or miniforge3
     mkdir -p anaconda_install && cd anaconda_install
-    wget $DLPATH -O conda.sh
+    curl -sSL $DLPATH -o conda.sh
     bash conda.sh -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
@@ -52,42 +52,36 @@ function do_env_f {
     # set up environment and shell
     export CHSH=no
     export RUNZSH=no
-    sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sh -c "$(curl -sL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
     # check if any of the to be installed things already exist
     # if so, back them up
-    TARGET_LOCS=(
-        ${HOME}/.zshrc
-        ${HOME}/.zsh_aliases
-        ${HOME}/.zsh_functions
-        ${HOME}/.p10k.zsh
-        ${HOME}/.common_env_variables
-        ${HOME}/.ssh 
-        ${HOME}/.config/htop/htoprc
-        ${HOME}/.config/ttrv/ttrv.cfg
-        ${HOME}/.gitconfig
-        ${HOME}/.dircolors
-    )
+    while read p; do
+        line=($p)
+        [[ "$line" == "" ]] && break
+        SOURCE="${CONFIG_PATH}/${line[0]}"
+        if [[ "${#line[@]}" -eq 2 ]]; then
+            TARGET="${HOME}/${line[1]}"
+        else
+            TARGET=""
+        fi
+        introduce_config_file "${SOURCE}" "${TARGET}"
+    done < "${CONFIG_PATH}/config_mappings.txt"
 
-    REPO_LOCS=(
-        ${CONFIG_PATH}/zshrc
-        ${CONFIG_PATH}/zsh_aliases
-        ${CONFIG_PATH}/zsh_functions
-        ${CONFIG_PATH}/p10k.zsh
-        ${CONFIG_PATH}/common_env_variables
-        ${CONFIG_PATH}/ssh
-        ${CONFIG_PATH}/htoprc
-        ${CONFIG_PATH}/ttrv.cfg
-        ${CONFIG_PATH}/gitconfig
-        ${CONFIG_PATH}/dircolors
-    )
-    for i in "${!REPO_LOCS[@]}"; do
-        REPO="${REPO_LOCS[$i]}"
-        TARGET="${TARGET_LOCS[$i]}"
-        introduce_config_file "${REPO}" "${TARGET}"
-    done
+    # do not ever replace some configs like SSH
+    while read p; do
+        line=($p)
+        [[ "$line" == "" ]] && break
+        SOURCE="${CONFIG_PATH}/${line[0]}"
+        if [[ "${#line[@]}" -eq 2 ]]; then
+            TARGET="${HOME}/${line[1]}"
+        else
+            TARGET=""
+        fi
+        introduce_config_file_if_not_exists "${SOURCE}" "${TARGET}"
+    done < "${CONFIG_PATH}/config_mappings_no_replace.txt"
 }
 
 
@@ -122,7 +116,7 @@ function do_docker_f {
 function do_goofys_f {
     echo "Installing goofys..."
     GOOFYS_VERSION="v0.24.0"
-    wget "https://github.com/kahing/goofys/releases/download/${GOOFYS_VERSION}/goofys"
+    curl -sL "https://github.com/kahing/goofys/releases/download/${GOOFYS_VERSION}/goofys"
     chmod +x goofys
     $SUDO_PREFIX mv goofys "$(get_bin_dir)/goofys"
 }
@@ -136,7 +130,7 @@ function do_various_f {
 
 function do_minimal_f {
     echo "Installing minimal tooling..."
-    ALL_MINIMAL=(git zsh wget make)
+    ALL_MINIMAL=(git zsh curl make)
     [[ -z "$CC" ]] && ALL_MINIMAL+=(gcc)
     [[ -z "$CPP" ]] && ALL_MINIMAL+=(g++)
     try_install_all $ALL_MINIMAL

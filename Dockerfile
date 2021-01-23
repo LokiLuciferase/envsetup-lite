@@ -3,6 +3,12 @@ FROM ubuntu:focal
 ADD . /opt/envsetup-lite
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
+ARG DO_ALL
+ARG DO_PYTHON
+ARG DO_ENV
+ARG DO_VIM
+ARG DO_EXTRAS
+ARG ALLOW_SUDO
 
 RUN apt-get update --fix-missing
 RUN apt-get install --yes curl wget sudo
@@ -14,9 +20,8 @@ RUN useradd -m testuser -s /bin/bash \
 USER testuser
 RUN whoami
 RUN sudo whoami
-RUN echo "Build date: 10/01/2020"
 RUN cd /home/testuser \
     && cp -r /opt/envsetup-lite . \
     && cd envsetup-lite \
-    && DO_ALL=true /bin/bash set_up.sh
+    && /bin/bash set_up.sh
 
