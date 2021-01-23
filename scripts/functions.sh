@@ -66,6 +66,7 @@ function do_env_f {
         ${HOME}/.common_env_variables
         ${HOME}/.ssh 
         ${HOME}/.config/htop/htoprc
+        ${HOME}/.config/ttrv/ttrv.cfg
         ${HOME}/.gitconfig
         ${HOME}/.dircolors
     )
@@ -78,6 +79,7 @@ function do_env_f {
         ${CONFIG_PATH}/common_env_variables
         ${CONFIG_PATH}/ssh
         ${CONFIG_PATH}/htoprc
+        ${CONFIG_PATH}/ttrv.cfg
         ${CONFIG_PATH}/gitconfig
         ${CONFIG_PATH}/dircolors
     )
