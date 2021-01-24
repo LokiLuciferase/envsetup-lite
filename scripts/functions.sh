@@ -115,8 +115,9 @@ function do_docker_f {
 
 function do_goofys_f {
     echo "Installing goofys..."
+    [[ "$(get_arch)" == "amd64" ]] || return 0  # x86
     GOOFYS_VERSION="v0.24.0"
-    curl -sL "https://github.com/kahing/goofys/releases/download/${GOOFYS_VERSION}/goofys"
+    curl -sL -o goofys "https://github.com/kahing/goofys/releases/download/${GOOFYS_VERSION}/goofys"
     chmod +x goofys
     $SUDO_PREFIX mv goofys "$(get_bin_dir)/goofys"
 }
