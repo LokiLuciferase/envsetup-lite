@@ -3,12 +3,13 @@ set -eo pipefail
 
 # config
 PKG_MNGR="${PKG_MNGR:-apt-get}"  # package manager to use
-ALLOW_SUDO="${ALLOW_SUDO:-false}"  # allows installation of stuff with Apt and writing to system dirs
-DO_PYTHON="${DO_PYTHON:-false}"  # install an essential Python 3 dev environment with data science focus, using miniconda3.
-DO_ENV="${DO_ENV:-false}"  # install the zsh, powerlevel10k and a number of dotfiles.
+ALLOW_SUDO="${ALLOW_SUDO:-false}"  # allows installation of pkgs with apt and writing to system dirs
+DO_PYTHON="${DO_PYTHON:-false}"  # install an essential Python3 dev environment with data science focus, using miniconda3.
+DO_ENV="${DO_ENV:-false}"  # install zsh, powerlevel10k and a number of dotfiles.
 RUN_ZSH="${RUN_ZSH:-true}"  # run ZSH at end of install
-DO_VIM="${DO_VIM:-false}"  # install vim and initialize .vimrc
-DO_EXTRAS="${DO_EXTRAS:-false}" # also install extra features such as Docker, goofys and fzf
+DO_VIM="${DO_VIM:-false}"  # install nvim and spacevim
+DO_EXTRAS="${DO_EXTRAS:-false}" # also install extra features such as goofys, rg and fzf
+DO_DOCKER="${DO_DOCKER:-false}"  # install docker
 DO_ALL="${DO_ALL:-false}"  # whether to override all other settings, and do all, using sudo
 
 if [[ "$DO_ALL" = true ]]; then
@@ -16,6 +17,7 @@ if [[ "$DO_ALL" = true ]]; then
     DO_ENV=true
     DO_VIM=true
     DO_EXTRAS=true
+    DO_DOCKER=true
     ALLOW_SUDO=true
 fi
 
@@ -35,6 +37,7 @@ source "${SCRIPT_PATH}/functions.sh"
 [[ "$DO_PYTHON" = true ]] && [[ "$DO_ENV" = true ]] && conda init zsh && export PATH=$HOME/miniconda3/bin:$PATH
 [[ "$DO_VIM" = true ]] && do_vim_f
 [[ "$DO_EXTRAS" = true ]] && do_minimal_f && do_extras_f
+[[ "$DO_DOCKER" = true ]] && do_docker_f
 running_in_docker && exit 0
-[[ "$DO_ENV" = true  && "$RUN_ZSH" = true ]] && echo 'Running zsh now. To make this permanent, run: sudo /usr/bin/chsh -s $(which zsh) $USER' && exec zsh
+[[ "$DO_ENV" = true  && "$RUN_ZSH" = true ]] && echo 'Running zsh now. To make this permanent, run: /usr/bin/chsh -s $(which zsh)' && exec zsh
 

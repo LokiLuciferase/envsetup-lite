@@ -18,11 +18,12 @@ curl -sL https://gist.github.com/LokiLuciferase/cd31c91b536dd65036a431d214f4e0d2
 To customize which components to install, set the requisite environment variables and run the set up script:
 ```
 export PKG_MNGR='apt-get'
-export ALLOW_SUDO=true  # allows installation of stuff with package manager and writing to system dirs
+export ALLOW_SUDO=true  # allows installation of pkgs with package manager and writing to system dirs
 export DO_PYTHON=true  #install an essential Python3 dev environment with data science focus, using miniconda3.
-export DO_ENV=true  # install the zsh, powerlevel10k and a number of dotfiles.
-export DO_VIM=true  # install neovim, SpaceVim and initialize .vimrc
-export DO_EXTRAS=true  # also install extra features such as Docker, goofys and fzf
+export DO_ENV=true  # install zsh, powerlevel10k and a number of dotfiles.
+export DO_VIM=true  # install neovim and SpaceVim
+export DO_EXTRAS=true  # also install extra features such as rg, goofys and fzf
+export DO_DOCKER=true  # also install docker
 export DO_ALL=false  # whether to override all other settings, and do all, using sudo
 
 git clone git@github.com:LokiLuciferase/envsetup-lite.git

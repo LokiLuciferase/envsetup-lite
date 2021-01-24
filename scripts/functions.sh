@@ -102,13 +102,16 @@ function do_docker_f {
     have_sudo && [[ "$PKG_MNGR" = 'apt-get' ]] || "Could not install Docker."
     $SUDO_PREFIX apt-get update
     $SUDO_PREFIX apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common --yes
-    $SUDO_PREFIX apt-get remove docker docker-engine docker.io containerd runc
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    $SUDO_PREFIX add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    $SUDO_PREFIX apt-get remove docker docker-engine docker.io containerd runc || true
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | $SUDO_PREFIX apt-key add -
+    $SUDO_PREFIX apt-key fingerprint 0EBFCD88
+    ARCH=$(get_arch)
+    $SUDO_PREFIX add-apt-repository "deb [arch=${ARCH}] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     $SUDO_PREFIX apt-get update
     $SUDO_PREFIX apt-get install docker-ce docker-ce-cli containerd.io --yes
-    $SUDO_PREFIX systemctl enable docker
-    $SUDO_PREFIX groupadd docker
+    $SUDO_PREFIX systemctl enable docker.service
+    $SUDO_PREFIX systemctl enable containerd.service
+    $SUDO_PREFIX groupadd docker || true
     $SUDO_PREFIX usermod -aG docker $USER || true
 }
 

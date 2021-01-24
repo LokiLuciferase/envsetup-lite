@@ -8,6 +8,7 @@ ARG DO_PYTHON
 ARG DO_ENV
 ARG DO_VIM
 ARG DO_EXTRAS
+ARG DO_DOCKER
 ARG ALLOW_SUDO
 
 RUN apt-get update --fix-missing
