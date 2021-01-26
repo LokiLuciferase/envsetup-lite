@@ -16,7 +16,6 @@ dependencies:
   - make
   - matplotlib
   - mysqlclient
-  - memory-profiler
   - notebook
   - numpy
   - openpyxl
@@ -39,7 +38,6 @@ dependencies:
   - xlrd
   - pip:  # move packages failing on arm64/miniforge3 to pip
     - asciinema
-    - rise
     - jupyter_contrib_nbextensions
     - jupyter_nbextensions_configurator
     - ipython
@@ -47,4 +45,6 @@ dependencies:
     - jupyter
     - jupyterlab
     - jupyterthemes
-  
+    - memory-profiler
+    - rise
+

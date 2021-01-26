@@ -18,7 +18,29 @@ function get_nonfound_cmds {
 }
 
 function get_arch {
-    dpkg --print-architecture || echo "amd64"
+    FOUND_ARCH=$(uname -m)
+    if [[ "$FOUND_ARCH" = 'arm64' ]] || [[ "$FOUND_ARCH" = 'aarch64' ]]; then
+        # 64-bit ARM
+        echo 'arm64'
+    elif [[ "$FOUND_ARCH" = 'armv7l' ]]; then
+        # 32-bit ARM
+        echo 'armv7l'
+    else
+        echo 'amd64'
+    fi
+}
+
+function get_package_list {
+    # get_package_list fraction pkg_mngr
+    package_list_file="${CONFIG_PATH}/package_lists.tsv"
+    cols=($(head -1 ${package_list_file}))
+    idx=""
+    for ci in "${!cols[@]}"; do
+        [[ "${cols[$ci]}" == $2 ]] && idx=$ci
+    done
+    [[ -z "$idx" ]] && echo "Invalid package manager chosen: $2" && return 1
+    pkgs=("$(sed 1d ${package_list_file} | grep $1 | cut -f2- | cut -f${idx} | tr '\n' ' ')")
+    echo "$pkgs"
 }
 
 function running_in_docker {
@@ -34,7 +56,7 @@ function have_sudo {
         return 1
     elif [[ "$USER" = 'root' ]]; then
         return 0
-    elif [[ ! -z "$(groups $USER | grep sudo)" ]]; then
+    elif [[ -z "$(sudo -nv)" ]]; then
         sudo true
         return 0
     else
@@ -106,6 +128,8 @@ function try_pkg_mngr {
     elif [[ "$PKG_MNGR" = 'yum' ]]; then
         pkg_mngr_update
         $SUDO_PREFIX yum -y install $@
+    elif [[ "$PKG_MNGR" = 'pacman' ]]; then
+        $SUDO_PREFIX pacman -S --noconfirm $@
     else
         errmess "Unknown package manager '$PKG_MNGR' selected."
         return 1

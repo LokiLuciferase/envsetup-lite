@@ -1,0 +1,24 @@
+FROM archlinux:latest
+
+ADD . /opt/envsetup-lite
+ARG DO_ALL
+ARG DO_PYTHON
+ARG DO_ENV
+ARG DO_VIM
+ARG DO_EXTRAS
+ARG DO_DOCKER
+ARG ALLOW_SUDO
+ARG PKG_MNGR=pacman
+
+RUN pacman -Syu --noconfirm which curl wget sudo
+RUN useradd -m testuser -s /bin/bash \
+    && echo "testuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER testuser
+RUN whoami
+RUN sudo whoami
+RUN cd /home/testuser \
+    && cp -r /opt/envsetup-lite . \
+    && cd envsetup-lite \
+    && /bin/bash set_up.sh
+

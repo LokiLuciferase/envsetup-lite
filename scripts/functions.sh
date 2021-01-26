@@ -27,8 +27,10 @@ function do_python_f {
     bash conda.sh -b -p $HOME/miniconda3
     cd .. && rm -rf anaconda_install
     export PATH=$HOME/miniconda3/bin:$PATH
-    conda env update -f ${CONFIG_PATH}/essentials.yaml
-    conda clean -a --yes
+    # installing and using mamba is faster than resolving with conda...
+    conda install -c conda-forge mamba --yes
+    mamba env update -f ${CONFIG_PATH}/essentials.yaml
+    mamba clean -a --yes
     # setup setup custom jupyter stuff and jupyterthemes
     jupyter contrib nbextension install --sys-prefix
     jupyter nbextension enable rise --py --sys-prefix
@@ -128,16 +130,10 @@ function do_goofys_f {
 
 function do_various_f {
     echo "Installing various useful packages..."
-    try_install_any build-essential htop libmysqlclient-dev mysql-client rename pigz awscli progress tldr colordiff tmux parallel ripgrep fzf || true
-}
-
-
-function do_minimal_f {
-    echo "Installing minimal tooling..."
-    ALL_MINIMAL=(git zsh curl make)
-    [[ -z "$CC" ]] && ALL_MINIMAL+=(gcc)
-    [[ -z "$CPP" ]] && ALL_MINIMAL+=(g++)
-    try_install_all $ALL_MINIMAL
+    PKG_LIST="$(get_package_list various ${PKG_MNGR})"
+    ALL_EXTRAS=(${PKG_LIST})
+    echo ${ALL_EXTRAS[@]}
+    try_install_any "${ALL_EXTRAS[@]}" || true
 }
 
 

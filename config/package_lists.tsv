@@ -1,0 +1,22 @@
+fraction	apt-get	dnf	pacman
+minimal	git		git
+minimal	curl		curl
+minimal	make		make
+various	build-essential		base-devel
+various	htop		htop
+various	mysql		mysql
+various	libmysqlclient-dev		libmysqlclient
+various	mysql-client		mysql-clients
+various	rename		rename
+various	pigz		pigz
+various	awscli		aws-cli
+various	progress		progress
+various	tldr		tldr
+various	colordiff		colordiff
+various	tmux		tmux
+various	parallel		parallel
+various	ripgrep		ripgrep
+various	fzf		fzf
+vim	neovim		neovim
+env	zsh		zsh
+
