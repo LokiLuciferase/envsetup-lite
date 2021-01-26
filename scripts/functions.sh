@@ -60,7 +60,7 @@ function do_env_f {
 
     # install dotfiles: intended to be easily updated by pulling 
     introduce_dotfiles
-    # do not ever replace some configs like SSH
+    # do not ever replace some configs like SSH - only add to new env
     while read p; do
         line=($p)
         [[ "$line" == "" ]] && break
@@ -80,10 +80,7 @@ function do_vim_f {
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
     [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
-    introduce_config_file ${CONFIG_PATH}/vimrc ${HOME}/.vimrc
-    introduce_config_file ${CONFIG_PATH}/SpaceVim.d/ ${HOME}/.SpaceVim.d
 }
-
 
 function do_docker_f {
     echo "Installing Docker..."

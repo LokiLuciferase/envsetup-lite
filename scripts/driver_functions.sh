@@ -77,6 +77,7 @@ function introduce_static_config_file {
         fi
     fi
     [[ -d $2 ]] && mv $2 "${2}.~1~"
+    mkdir -p "$(dirname $2)"
     cp -r --backup=t "$1" "$2"
 }
 
@@ -85,10 +86,14 @@ function introduce_static_config_file_if_not_exists {
 }
 
 function introduce_dotfiles {
-    REPO_DOTFILE_DIR="${CONFIG_DIR}/dotfiles"
+    REPO_DOTFILE_DIR="${CONFIG_PATH}/dotfiles"
     DOTFILE_DIR="${HOME}/.dotfiles"
+    DOTFILE_PUSH_URL='git@github.com:LokiLuciferase/dotfiles'
     [[ -d "${DOTFILE_DIR}" ]] && errmess "dotfile directory already present." && return 0  # already exists
-    [[ ! -d "${REPO_DOTFILE_DIR}/.git" ]] && errmess "dotfiles submodule not initialized." && return 1
+    if [[ ! -d "${REPO_DOTFILE_DIR}/.git" ]]; then
+        git submodule update --init
+        pushd "${REPO_DOTFILE_DIR}" && git remote set-url --push origin "${DOTFILE_PUSH_URL}" && popd
+    fi
     cp -r "${REPO_DOTFILE_DIR}" "${DOTFILE_DIR}"
     while read p; do
         line=($p)
@@ -96,6 +101,7 @@ function introduce_dotfiles {
         if [[ "${#line[@]}" -eq 2 ]]; then
             SOURCE="${DOTFILE_DIR}/${line[0]}"
             TARGET="${HOME}/${line[1]}"
+            mkdir -p "$(dirname $TARGET)"
             ln -vs --backup=t "${SOURCE}" "${TARGET}"
         fi
     done < "${CONFIG_PATH}/config_mappings.txt"
