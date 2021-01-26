@@ -68,8 +68,8 @@ function get_sudo_prefix {
     [[ "$USER" = 'root' ]] && echo "" || echo "sudo"
 }
 
-function introduce_config_file {
-    # introduce_config_file storage_location target_location
+function introduce_static_config_file {
+    # introduce_static_config_file storage_location target_location
     if [[ -d $2 || -f $2 ]]; then
         if [[ "${UPDATE_BEHAVIOUR}" != "all" && "${UPDATE_BEHAVIOUR}" != "configs" ]]; then
             errmess "Config $2 already exists."
@@ -77,19 +77,28 @@ function introduce_config_file {
         fi
     fi
     [[ -d $2 ]] && mv $2 "${2}.~1~"
-    UNIFIED_CONFIG_DIR="${HOME}/.envsetup-lite.d"
-    CONFIG_FILENAME="$(basename $1)"
-    mkdir -p "${UNIFIED_CONFIG_DIR}"
-    rm -rf "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}"
-    cp -r --backup=t "$1" "${UNIFIED_CONFIG_DIR}"
-    if [[ "$2" != "" ]]; then
-        mkdir -p "$(dirname $2)"
-        ln -vs --backup=t "${UNIFIED_CONFIG_DIR}/${CONFIG_FILENAME}" $2
-    fi
+    cp -r --backup=t "$1" "$2"
 }
 
-function introduce_config_file_if_not_exists {
-    UPDATE_BEHAVIOUR="no" introduce_config_file $1 $2 || true
+function introduce_static_config_file_if_not_exists {
+    UPDATE_BEHAVIOUR="no" introduce_static_config_file $1 $2 || true
+}
+
+function introduce_dotfiles {
+    REPO_DOTFILE_DIR="${CONFIG_DIR}/dotfiles"
+    DOTFILE_DIR="${HOME}/.dotfiles"
+    [[ -d "${DOTFILE_DIR}" ]] && errmess "dotfile directory already present." && return 0  # already exists
+    [[ ! -d "${REPO_DOTFILE_DIR}/.git" ]] && errmess "dotfiles submodule not initialized." && return 1
+    cp -r "${REPO_DOTFILE_DIR}" "${DOTFILE_DIR}"
+    while read p; do
+        line=($p)
+        [[ "$line" == "" ]] && break
+        if [[ "${#line[@]}" -eq 2 ]]; then
+            SOURCE="${DOTFILE_DIR}/${line[0]}"
+            TARGET="${HOME}/${line[1]}"
+            ln -vs --backup=t "${SOURCE}" "${TARGET}"
+        fi
+    done < "${CONFIG_PATH}/config_mappings.txt"
 }
 
 function maybe_restore_config_file {

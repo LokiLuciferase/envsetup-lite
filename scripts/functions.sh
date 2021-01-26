@@ -58,20 +58,8 @@ function do_env_f {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
-    # check if any of the to be installed things already exist
-    # if so, back them up
-    while read p; do
-        line=($p)
-        [[ "$line" == "" ]] && break
-        SOURCE="${CONFIG_PATH}/${line[0]}"
-        if [[ "${#line[@]}" -eq 2 ]]; then
-            TARGET="${HOME}/${line[1]}"
-        else
-            TARGET=""
-        fi
-        introduce_config_file "${SOURCE}" "${TARGET}"
-    done < "${CONFIG_PATH}/config_mappings.txt"
-
+    # install dotfiles: intended to be easily updated by pulling 
+    introduce_dotfiles
     # do not ever replace some configs like SSH
     while read p; do
         line=($p)
@@ -82,10 +70,9 @@ function do_env_f {
         else
             TARGET=""
         fi
-        introduce_config_file_if_not_exists "${SOURCE}" "${TARGET}"
+        introduce_static_config_file_if_not_exists "${SOURCE}" "${TARGET}"
     done < "${CONFIG_PATH}/config_mappings_no_replace.txt"
 }
-
 
 function do_vim_f {
     echo "Setting up Vim..."

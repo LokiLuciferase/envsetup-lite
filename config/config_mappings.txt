@@ -7,4 +7,6 @@ htoprc .config/htop/htoprc
 ttrv.cfg .config/ttrv/ttrv.cfg
 gitconfig .gitconfig
 dircolors .dircolors
+vimrc .config/vimrc
+SpaceVim.d .SpaceVim.d
 
