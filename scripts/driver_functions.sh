@@ -125,9 +125,9 @@ function try_pkg_mngr {
     if [[ "$PKG_MNGR" = 'apt-get' ]]; then
         pkg_mngr_update
         $SUDO_PREFIX DEBIAN_FRONTEND=noninteractive apt-get install $@ --yes
-    elif [[ "$PKG_MNGR" = 'yum' ]]; then
+    elif [[ "$PKG_MNGR" = 'dnf' ]]; then
         pkg_mngr_update
-        $SUDO_PREFIX yum -y install $@
+        $SUDO_PREFIX dnf -y install $@
     elif [[ "$PKG_MNGR" = 'pacman' ]]; then
         $SUDO_PREFIX pacman -S --noconfirm $@
     else

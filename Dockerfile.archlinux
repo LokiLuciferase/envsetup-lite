@@ -10,7 +10,7 @@ ARG DO_DOCKER
 ARG ALLOW_SUDO
 ARG PKG_MNGR=pacman
 
-RUN pacman -Syu --noconfirm which curl wget sudo
+RUN pacman -Syu --noconfirm which curl sudo
 RUN useradd -m testuser -s /bin/bash \
     && echo "testuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 

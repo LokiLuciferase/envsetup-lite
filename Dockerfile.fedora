@@ -1,8 +1,6 @@
-FROM ubuntu:focal
+FROM fedora:latest
 
 ADD . /opt/envsetup-lite
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ARG DEBIAN_FRONTEND=noninteractive
 ARG DO_ALL
 ARG DO_PYTHON
 ARG DO_ENV
@@ -10,12 +8,11 @@ ARG DO_VIM
 ARG DO_EXTRAS
 ARG DO_DOCKER
 ARG ALLOW_SUDO
+ARG PKG_MNGR=dnf
 
-RUN apt-get update --fix-missing
-RUN apt-get install --yes curl sudo
-RUN apt-get clean
+RUN dnf install -y which curl sudo
+RUN dnf upgrade -y
 RUN useradd -m testuser -s /bin/bash \
-    && adduser testuser sudo \
     && echo "testuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER testuser
