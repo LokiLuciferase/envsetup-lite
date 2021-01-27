@@ -79,7 +79,13 @@ function do_vim_f {
     try_install_cascade git  || (errmess "Git not installed." && return 1)
     try_install_cascade curl || (errmess "Curl not installed." && return 1)
     try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
+    git submodule --init
     [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
+    if [[ ! -d "${HOME}/.SpaceVim.d" && ! -L "${HOME}/.SpaceVim.d" ]]; then
+        # standalone installation without dotfiles
+        cp -vr --backup=t ${CONFIG_PATH}/dotfiles/SpaceVim.d "${HOME}/.SpaceVim.d"
+        cp -vr --backup=t ${CONFIG_PATH}/dotfiles/vimrc "${HOME}/.config/vimrc"
+    fi
 }
 
 function do_docker_f {
