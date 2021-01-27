@@ -1,5 +1,15 @@
 Host *
-    PreferredAuthentications publickey,keyboard-interactive
+    # PreferredAuthentications publickey,keyboard-interactive
     ServerAliveInterval 120
     ServerAliveCountMax 60
     ForwardX11 yes
+
+Host github.com
+    ForwardX11 no
+
+Host gitlab.com
+    ForwardX11 no
+
+Host bitbucket.org
+    ForwardX11 no
+
