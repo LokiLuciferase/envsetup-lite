@@ -88,13 +88,11 @@ function introduce_static_config_file_if_not_exists {
 function introduce_dotfiles {
     REPO_DOTFILE_DIR="${CONFIG_PATH}/dotfiles"
     DOTFILE_DIR="${HOME}/.dotfiles"
+    DOTFILE_CLONE_URL='https://github.com/LokiLuciferase/dotfiles.git'
     DOTFILE_PUSH_URL='git@github.com:LokiLuciferase/dotfiles'
     [[ -d "${DOTFILE_DIR}" ]] && errmess "dotfile directory already present." && return 0  # already exists
-    if [[ ! -d "${REPO_DOTFILE_DIR}/.git" ]]; then
-        git submodule update --init
-        pushd "${REPO_DOTFILE_DIR}" && git remote set-url --push origin "${DOTFILE_PUSH_URL}" && popd
-    fi
-    cp -r "${REPO_DOTFILE_DIR}" "${DOTFILE_DIR}"
+    git clone "${DOTFILE_CLONE_URL}" "${DOTFILE_DIR}"
+    pushd "${DOTFILE_DIR}" && git remote set-url --push origin "${DOTFILE_PUSH_URL}" && popd
     while read p; do
         line=($p)
         [[ "$line" == "" ]] && break
