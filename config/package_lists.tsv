@@ -4,7 +4,7 @@ minimal	curl	curl	curl
 minimal	make	make	make
 various	build-essential	@development-tools	base-devel
 various	htop	htop	htop
-various	mysql	mysql	mysql
+various		mysql	mysql
 various	libmysqlclient-dev	mysql-devel	libmysqlclient
 various	mysql-client		mysql-clients
 various	rename	rename	rename
