@@ -10,4 +10,4 @@ ttrv.cfg .config/ttrv/ttrv.cfg
 gitconfig .gitconfig
 vimrc .config/vimrc
 SpaceVim.d .SpaceVim.d
-
+ideavimrc .config/ideavim/ideavimrc
