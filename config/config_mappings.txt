@@ -4,6 +4,7 @@ aliases.zsh
 p10k.zsh
 env_vars.zsh
 dircolors
+tmux.conf .config/tmux/tmux.conf
 htoprc .config/htop/htoprc
 ttrv.cfg .config/ttrv/ttrv.cfg
 gitconfig .gitconfig

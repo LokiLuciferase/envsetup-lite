@@ -17,5 +17,7 @@ various	tmux	tmux	tmux
 various	parallel	parallel	parallel
 various	ripgrep	ripgrep	ripgrep
 various	fzf	fzf	fzf
+various	tmux	tmux	tmux
 vim	neovim	neovim	neovim
 env	zsh	zsh	zsh
+
