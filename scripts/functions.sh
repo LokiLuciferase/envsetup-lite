@@ -49,6 +49,11 @@ function do_python_f {
 
 function do_env_f {
     echo "Installing ZSH environment..."
+    # try install any indicated packages - zsh and git are required
+    PKG_LIST="$(get_package_list env ${PKG_MNGR})"
+    ALL_EXTRAS=(${PKG_LIST})
+    echo ${ALL_EXTRAS[@]}
+    try_install_any "${ALL_EXTRAS[@]}" 
     try_install_cascade zsh || (errmess "ZSH not installed." && return 1)
     try_install_cascade git || (errmess "Git not installed." && return 1)
     # set up environment and shell

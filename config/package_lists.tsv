@@ -1,4 +1,8 @@
 fraction	apt-get	dnf	pacman
+env	zsh	zsh	zsh
+env	tmux	tmux	tmux
+env	wmctrl	wmctrl	wmctrl
+env	git	git	git
 minimal	git	git	git
 minimal	curl	curl	curl
 minimal	make	make	make
@@ -18,6 +22,6 @@ various	parallel	parallel	parallel
 various	ripgrep	ripgrep	ripgrep
 various	fzf	fzf	fzf
 various	tmux	tmux	tmux
+various	wmctrl	wmctrl	wmctrl
 vim	neovim	neovim	neovim
-env	zsh	zsh	zsh
 
