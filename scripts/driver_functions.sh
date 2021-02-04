@@ -105,6 +105,32 @@ function introduce_dotfiles {
     done < "${CONFIG_PATH}/config_mappings.txt"
 }
 
+function mk_clean_home_launcher {
+    # mk_clean_home_launcher app-name config-dir-name
+    if [[ "$#" -eq 2 ]]; then
+        LAUNCHER_NAME="$1"
+        CFG_DIR="$2"
+    elif [[ "$#" -eq 1 ]]; then
+        LAUNCHER_NAME="$1"
+        CFG_DIR=".${1}"
+    else
+        errmess "Invalid call: $@" && return 1
+    fi
+    XDG_CONFIG_DIR=${XDG_CONFIG_DIR:-${HOME}/.config}
+    LOCAL_BIN_DIR="${HOME}/.local/bin"
+    LAUNCHER_PATH="${LOCAL_BIN_DIR}/${LAUNCHER_NAME}"
+    TARGET_CFG_PAR_DIR="${XDG_CONFIG_DIR}/${LAUNCHER_NAME}"
+    [[ ! "${PATH}" =~ "${LOCAL_BIN_DIR}" ]] && errmess "Local bin dir (${LOCAL_BIN_DIR}) is not on PATH." && return 1
+    [[ ! -d "${HOME}/${CFG_DIR}" ]] && errmess "Did not find config dir to use: ${CFG_DIR}" && return 1
+    [[ -d "${TARGET_CFG_PAR_DIR}" ]] && errmess "Target config dir already exists: ${TARGET_CFG_PAR_DIR}" && return 1
+    mkdir -p "${LOCAL_BIN_DIR}"
+    mkdir -p "${TARGET_CFG_PAR_DIR}"
+    mv "${CFG_DIR}" "${TARGET_CFG_PAR_DIR}"
+    echo '#!/usr/bin/env sh' > "${LAUNCHER_PATH}"
+    echo "HOME=${TARGET_CFG_PAR_DIR} ${LAUNCHER_NAME} \"\$@\"" >> "${LAUNCHER_PATH}"
+    chmod +x "${LAUNCHER_PATH}"
+}
+
 function maybe_restore_config_file {
     # restore_config_file target_location
     LATEST_BACKUP_FILE=$(ls -d "$1".~*~ | sort | tail -1)
