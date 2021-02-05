@@ -8,6 +8,6 @@ tmux.conf .config/tmux/tmux.conf
 htoprc .config/htop/htoprc
 ttrv.cfg .config/ttrv/ttrv.cfg
 gitconfig .gitconfig
-vimrc .config/vimrc
+init.vim .config/nvim/init.vim
 SpaceVim.d .SpaceVim.d
 ideavimrc .config/ideavim/ideavimrc
