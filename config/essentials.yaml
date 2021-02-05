@@ -15,6 +15,7 @@ dependencies:
   - flake8
   - lxml
   - make
+  - mamba
   - matplotlib
   - mysqlclient
   - notebook
