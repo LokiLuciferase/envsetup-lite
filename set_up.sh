@@ -4,6 +4,7 @@ set -eo pipefail
 # config
 PKG_MNGR="${PKG_MNGR:-apt-get}"  # package manager to use
 ALLOW_SUDO="${ALLOW_SUDO:-false}"  # allows installation of pkgs with apt and writing to system dirs
+DO_BREW_IF_NO_SUDO="${DO_BREW_IF_NO_SUDO:-false}"  # install and use brew if sudo is not available
 DO_PYTHON="${DO_PYTHON:-false}"  # install an essential Python3 dev environment with data science focus, using miniconda3.
 DO_ENV="${DO_ENV:-false}"  # install zsh, powerlevel10k and a number of dotfiles.
 RUN_ZSH="${RUN_ZSH:-true}"  # run ZSH at end of install
@@ -33,6 +34,7 @@ source "${SCRIPT_PATH}/functions.sh"
 
 # run selected
 [[ "$DO_PYTHON" = true ]] && do_python_f
+[[ "$ALLOW_SUDO" != true ]] && [[ "$DO_BREW_IF_NO_SUDO" = true ]] && do_brew_f && export PATH=$HOME/.linuxbrew/bin/brew:$PATH
 [[ "$DO_ENV" = true ]] && do_env_f
 [[ "$DO_PYTHON" = true ]] && [[ "$DO_ENV" = true ]] && conda init zsh && export PATH=$HOME/miniconda3/bin:$PATH
 [[ "$DO_VIM" = true ]] && do_vim_f

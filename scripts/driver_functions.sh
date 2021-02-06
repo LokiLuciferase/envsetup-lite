@@ -51,6 +51,10 @@ function have_conda {
     have_cmd conda && return 0 || return 1
 }
 
+function have_brew {
+    have_cmd brew && return 0 || return 1
+}
+
 function have_sudo {
     if [[ "$ALLOW_SUDO" != true ]]; then
         return 1
@@ -181,24 +185,42 @@ function try_pkg_mngr {
     fi
 }
 
-function try_conda_forge {
-    echo "Attempting to install $@ with conda."
-    have_conda || (echo "Conda not installed." && return 1)
-    conda install -c conda-forge $@ --yes
+function try_brew {
+    echo "Attempting to install $@ with brew."
+    have_brew || { echo "Brew not installed." && return 1; }
+    brew install "$@"
     if [[ "$?" -eq 0 ]]; then
         return 0
     else
-        errmess "Could not install $@ with conda."
+        errmess "Could not install $@ with brew."
+        return 1
+    fi
+}
+
+function try_conda_forge {
+    echo "Attempting to install $@ with conda."
+    have_conda || { echo "Conda not installed." && return 1; }
+    if [[ "$(which mamba)" != "" ]]; then
+        CONDABIN='mamba'
+    else
+        CONDABIN='conda'
+    fi
+    $CONDABIN install -c conda-forge "$@" --yes
+    if [[ "$?" -eq 0 ]]; then
+        return 0
+    else
+        errmess "Could not install $@ with ${CONDABIN}."
         return 1
     fi
 }
 
 # try to install packages with package manager if privileges ok;
-# if fails or if no privs, try with conda forge.
+# if fails or if no privs, try with brew and then with conda forge.
 function try_install_cascade {
     notfound=($(get_nonfound_cmds "$@"))
     [[ "${#notfound[@]}" -eq 0 ]] && return 0
     have_sudo && try_pkg_mngr $notfound && return 0
+    have_brew && try_brew $notfound && return 0
     have_conda && try_conda_forge $notfound && return 0
     errmess "Failed to install $notfound."
     return 1
@@ -225,3 +247,20 @@ function try_install_any {
     done
     return $RV
 }
+
+function ensure_gcc_toolchain {
+    # make sure gcc toolchain is available - attempt to install with conda-forge else
+    if [[ "$(which gcc)" = '' ]] && [[ "$CC" = '' ]]; then
+        try_conda_forge gcc_linux-64 && eval "$(conda shell.bash hook)" && conda deactivate && conda activate base
+        if [[ "$CC" != '' ]]; then
+            mkdir -p ${HOME}/.local/bin
+            ln -s ${CC} ${HOME}/.local/bin/gcc
+            return 0
+        else
+            return 1
+        fi
+    else
+        return 0
+    fi
+}
+
