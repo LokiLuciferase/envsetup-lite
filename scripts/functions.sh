@@ -13,7 +13,7 @@ function do_python_f {
             return 1
         fi
     fi
-    try_install_cascade curl || (errmess "cURL not installed." && return 1)
+    try_install_cascade curl || { errmess "cURL not installed." && return 1; }
     if [[ "$(get_arch)" = "amd64" ]]; then
         DLPATH="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     elif [[ "$(get_arch)" = "arm64" ]]; then
@@ -47,15 +47,29 @@ function do_python_f {
 }
 
 
+function do_brew_f {
+    echo "Installing brew..."
+    [[ "$(get_arch)" != 'amd64' ]] && errmess "Cannot install brew on non-x86_64 arch." && return 1
+    ensure_gcc_toolchain || { errmess "Cannot install brew: GCC not installed." && return 1; }
+    try_install_cascade git || { errmess "Git not installed." && return 1; }
+    export HOMEBREW_NO_ENV_FILTERING=1
+    git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
+    mkdir ~/.linuxbrew/bin
+    ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
+    eval $(~/.linuxbrew/bin/brew shellenv)
+    brew install hello
+}
+
+
 function do_env_f {
     echo "Installing ZSH environment..."
     # try install any indicated packages - zsh and git are required
     PKG_LIST="$(get_package_list env ${PKG_MNGR})"
     ALL_EXTRAS=(${PKG_LIST})
     echo ${ALL_EXTRAS[@]}
-    try_install_any "${ALL_EXTRAS[@]}" 
-    try_install_cascade zsh || (errmess "ZSH not installed." && return 1)
-    try_install_cascade git || (errmess "Git not installed." && return 1)
+    try_install_any "${ALL_EXTRAS[@]}"
+    try_install_cascade zsh || { errmess "ZSH not installed." && return 1; }
+    try_install_cascade git || { errmess "Git not installed." && return 1; }
     # set up environment and shell
     export CHSH=no
     export RUNZSH=no
@@ -63,7 +77,7 @@ function do_env_f {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
-    # install dotfiles: intended to be easily updated by pulling 
+    # install dotfiles: intended to be easily updated by pulling
     introduce_dotfiles
     # do not ever replace some configs like SSH - only add to new env
     while read p; do
@@ -81,9 +95,9 @@ function do_env_f {
 
 function do_vim_f {
     echo "Setting up Vim..."
-    try_install_cascade git  || (errmess "Git not installed." && return 1)
-    try_install_cascade curl || (errmess "Curl not installed." && return 1)
-    try_install_cascade neovim  || (errmess "Neovim not installed." && return 1)
+    try_install_cascade git  || { errmess "Git not installed." && return 1; }
+    try_install_cascade curl || { errmess "Curl not installed." && return 1; }
+    try_install_cascade neovim  || { errmess "Neovim not installed." && return 1; }
     [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
     if [[ ! -d "${HOME}/.SpaceVim.d" && ! -L "${HOME}/.SpaceVim.d" ]]; then
         # standalone installation without dotfiles
