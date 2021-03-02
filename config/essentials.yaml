@@ -13,6 +13,7 @@ dependencies:
   - cookiecutter
   - docformatter
   - flake8
+  - html5lib
   - lxml
   - make
   - mamba
