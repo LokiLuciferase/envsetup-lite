@@ -94,10 +94,17 @@ function do_env_f {
 }
 
 function do_vim_f {
-    echo "Setting up Vim..."
+    echo "Setting up Neovim..."
     try_install_cascade git  || { errmess "Git not installed." && return 1; }
     try_install_cascade curl || { errmess "Curl not installed." && return 1; }
     try_install_cascade neovim  || { errmess "Neovim not installed." && return 1; }
+    if [[ "$ALLOW_SUDO" != "true" && "$(which nvim)" == "" ]]; then
+        NVIM_NIGHTLY="https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage"
+        LOCAL_BIN_PATH="$HOME/.local/bin"
+        mkdir -p "$LOCAL_BIN_PATH"
+        curl -SsL -o nvim "$NVIM_NIGHTLY"
+        chmod u+x "$LOCAL_BIN_PATH/nvim"
+    fi
     [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
     if [[ ! -d "${HOME}/.SpaceVim.d" && ! -L "${HOME}/.SpaceVim.d" ]]; then
         # standalone installation without dotfiles
