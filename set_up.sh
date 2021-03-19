@@ -11,6 +11,7 @@ RUN_ZSH="${RUN_ZSH:-true}"  # run ZSH at end of install
 DO_VIM="${DO_VIM:-false}"  # install nvim and spacevim
 DO_EXTRAS="${DO_EXTRAS:-false}" # also install extra features such as goofys, rg and fzf
 DO_DOCKER="${DO_DOCKER:-false}"  # install docker
+DO_DESKTOP="${DO_DESKTOP:-false}"  # install desktop packages like VLC
 DO_ALL="${DO_ALL:-false}"  # whether to override all other settings, and do all, using sudo
 
 if [[ "$DO_ALL" = true ]]; then
@@ -40,6 +41,7 @@ source "${SCRIPT_PATH}/functions.sh"
 [[ "$DO_VIM" = true ]] && do_vim_f
 [[ "$DO_EXTRAS" = true ]] && do_extras_f
 [[ "$DO_DOCKER" = true ]] && [[ "$PKG_MNGR" = 'apt-get' ]] && do_docker_f
+[[ "$DO_DESKTOP" = true ]] && do_desktop_f
 running_in_docker && exit 0
 [[ "$DO_ENV" = true  && "$RUN_ZSH" = true ]] && echo 'Running zsh now. To make this permanent, run: /usr/bin/chsh -s $(which zsh)' && exec zsh
 

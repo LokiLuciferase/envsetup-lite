@@ -24,4 +24,13 @@ various	fzf	fzf	fzf
 various	tmux	tmux	tmux
 various	wmctrl	wmctrl	wmctrl
 vim	neovim	neovim	neovim
-
+desktop	gparted	gparted	gparted
+desktop	timeshift	timeshift	timeshift
+desktop	vlc	vlc	vlc
+desktop	evolution	evolution	evolution
+desktop	evolution-ews	evolution-ews	evolution-ews
+desktop	drawing	drawing	drawing
+desktop	imwheel	imwheel	imwheel
+desktop	redshift	redshift	redshift
+desktop	keepassxc	keepassxc	keepassxc
+desktop	spotify-client	spotify-client	spotify-client

@@ -102,7 +102,7 @@ function do_vim_f {
         NVIM_NIGHTLY="https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage"
         LOCAL_BIN_PATH="$HOME/.local/bin"
         mkdir -p "$LOCAL_BIN_PATH"
-        curl -SsL -o nvim "$NVIM_NIGHTLY"
+        curl -SsL -o "${LOCAL_BIN_PATH}/nvim" "$NVIM_NIGHTLY"
         chmod u+x "$LOCAL_BIN_PATH/nvim"
     fi
     [[ ! -d $HOME/.SpaceVim ]] && git clone https://github.com/SpaceVim/SpaceVim.git $HOME/.SpaceVim
@@ -111,7 +111,7 @@ function do_vim_f {
         git submodule update --init
         mkdir -p "${HOME}/.config"
         cp -vr --backup=t ${CONFIG_PATH}/dotfiles/SpaceVim.d "${HOME}/.SpaceVim.d"
-        cp -vr --backup=t ${CONFIG_PATH}/dotfiles/vimrc "${HOME}/.config/vimrc"
+        cp -vr --backup=t ${CONFIG_PATH}/dotfiles/init.vim "${HOME}/.config/nvim/init.vim"
     fi
 }
 
@@ -159,4 +159,13 @@ function do_extras_f {
     #do_docker_f || true
     do_goofys_f || true
     do_various_f || true
+}
+
+
+function do_desktop_f {
+    echo "Installing desktop packages..."
+    PKG_LIST="$(get_package_list desktop ${PKG_MNGR})"
+    ALL_DESKTOP=(${PKG_LIST})
+    echo ${ALL_DESKTOP[@]}
+    try_install_any "${ALL_DESKTOP[@]}" || true
 }
