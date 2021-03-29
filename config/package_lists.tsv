@@ -23,6 +23,7 @@ various	ripgrep	ripgrep	ripgrep
 various	fzf	fzf	fzf
 various	tmux	tmux	tmux
 various	wmctrl	wmctrl	wmctrl
+various	highlight	highlight	highlight
 vim	neovim	neovim	neovim
 desktop	gparted	gparted	gparted
 desktop	timeshift	timeshift	timeshift
