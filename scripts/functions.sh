@@ -44,6 +44,9 @@ function do_python_f {
     jupyter nbextension enable latex_envs/latex_envs
     jt -t chesterish -tfs 14 -ofs 10 -f dejavu -cellw 95% -altmd -T
     conda init bash
+    # enable vim bindings ipython
+    mkdir -p $HOME/.ipython/profile_default
+    echo "c.TerminalInteractiveShell.editing_mode = 'vi'" >> $HOME/.ipython/profile_default/ipython_config.py
 }
 
 
