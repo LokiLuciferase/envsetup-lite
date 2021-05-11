@@ -1,5 +1,6 @@
 source "${SCRIPT_PATH}/driver_functions.sh"
 
+
 function do_python_f {
     echo "Installing miniconda3 & jupyter..."
     if [[ -d "${HOME}/miniconda3" ]]; then
@@ -97,6 +98,7 @@ function do_env_f {
     done < "${CONFIG_PATH}/config_mappings_no_replace.txt"
 }
 
+
 function do_vim_f {
     echo "Setting up Neovim..."
     try_install_cascade git  || { errmess "Git not installed." && return 1; }
@@ -118,6 +120,7 @@ function do_vim_f {
         cp -vr --backup=t ${CONFIG_PATH}/dotfiles/init.vim "${HOME}/.config/nvim/init.vim"
     fi
 }
+
 
 function do_docker_f {
     echo "Installing Docker..."
@@ -158,11 +161,21 @@ function do_various_f {
 }
 
 
+function do_various_pip_f {
+    echo "Installing various useful packages with pip..."
+    PKG_LIST="$(get_package_list various pip)"
+    ALL_EXTRAS_PIP=(${PKG_LIST})
+    echo ${ALL_EXTRAS_PIP[@]}
+    try_pip "${ALL_EXTRAS_PIP[@]}" || true
+}
+
+
 function do_extras_f {
     echo "Installing extra tooling..."
     #do_docker_f || true
     do_goofys_f || true
     do_various_f || true
+    do_various_pip_f || true
 }
 
 

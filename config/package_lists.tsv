@@ -1,4 +1,4 @@
-fraction	apt-get	dnf	pacman
+fraction	apt-get	dnf	pacman	pip
 env	zsh	zsh	zsh
 env	tmux	tmux	tmux
 env	wmctrl	wmctrl	wmctrl
@@ -24,6 +24,12 @@ various	fzf	fzf	fzf
 various	tmux	tmux	tmux
 various	wmctrl	wmctrl	wmctrl
 various	highlight	highlight	highlight
+various	ffmpeg	ffmpeg	ffmpeg
+various	python3-pip	python3-pip	python-pip
+various				bpytop
+various				youtube-dl
+various				ttrv
+various				tldr
 vim	neovim	neovim	neovim
 desktop	gparted	gparted	gparted
 desktop	timeshift	timeshift	timeshift

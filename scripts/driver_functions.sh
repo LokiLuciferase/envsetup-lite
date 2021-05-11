@@ -197,6 +197,18 @@ function try_brew {
     fi
 }
 
+function try_pip {
+    echo "Attempting to install $@ with pip."
+    have_cmd pip || { echo "pip not installed." && return 1; }
+    pip install --user "$@"
+    if [[ "$?" -eq 0 ]]; then
+        return 0
+    else
+        errmess "Could not install $@ with pip."
+        return 1
+    fi
+}
+
 function try_conda_forge {
     echo "Attempting to install $@ with conda."
     have_conda || { echo "Conda not installed." && return 1; }
