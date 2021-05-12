@@ -1,15 +1,12 @@
-DEBIAN_FRONTEND=noninteractive
-
-function errmess {
+errmess() {
     echo "$@" 1>&2
 }
 
-function have_cmd {
+have_cmd() {
     [[ ! -z "$(command -v $1)" ]] && return 0 || return 1
 }
 
-function get_nonfound_cmds {
-    ALL=("$@")
+get_nonfound_cmds() {
     NOTFOUND=()
     for tool in $@; do
         have_cmd $tool || NOTFOUND+=( $tool )
@@ -17,7 +14,7 @@ function get_nonfound_cmds {
     echo "$NOTFOUND"
 }
 
-function get_arch {
+get_arch() {
     FOUND_ARCH=$(uname -m)
     if [[ "$FOUND_ARCH" = 'arm64' ]] || [[ "$FOUND_ARCH" = 'aarch64' ]]; then
         # 64-bit ARM
@@ -30,7 +27,7 @@ function get_arch {
     fi
 }
 
-function get_package_list {
+get_package_list() {
     # get_package_list fraction pkg_mngr
     package_list_file="${CONFIG_PATH}/package_lists.tsv"
     cols=($(head -1 ${package_list_file}))
@@ -43,19 +40,19 @@ function get_package_list {
     echo "$pkgs"
 }
 
-function running_in_docker {
+running_in_docker() {
   awk -F/ '$2 == "docker"' /proc/self/cgroup | read
 }
 
-function have_conda {
+have_conda() {
     have_cmd conda && return 0 || return 1
 }
 
-function have_brew {
+have_brew() {
     have_cmd brew && return 0 || return 1
 }
 
-function have_sudo {
+have_sudo() {
     if [[ "$ALLOW_SUDO" != true ]]; then
         return 1
     elif [[ "$USER" = 'root' ]]; then
@@ -68,11 +65,11 @@ function have_sudo {
     fi
 }
 
-function get_sudo_prefix {
+get_sudo_prefix() {
     [[ "$USER" = 'root' ]] && echo "" || echo "sudo"
 }
 
-function introduce_static_config_file {
+introduce_static_config_file() {
     # introduce_static_config_file storage_location target_location
     if [[ -d $2 || -f $2 ]]; then
         if [[ "${UPDATE_BEHAVIOUR}" != "all" && "${UPDATE_BEHAVIOUR}" != "configs" ]]; then
@@ -85,11 +82,11 @@ function introduce_static_config_file {
     cp -r --backup=t "$1" "$2"
 }
 
-function introduce_static_config_file_if_not_exists {
+introduce_static_config_file_if_not_exists() {
     UPDATE_BEHAVIOUR="no" introduce_static_config_file $1 $2 || true
 }
 
-function introduce_dotfiles {
+introduce_dotfiles() {
     REPO_DOTFILE_DIR="${CONFIG_PATH}/dotfiles"
     DOTFILE_DIR="${HOME}/.dotfiles"
     DOTFILE_CLONE_URL='https://github.com/LokiLuciferase/dotfiles.git'
@@ -109,7 +106,7 @@ function introduce_dotfiles {
     done < "${CONFIG_PATH}/config_mappings.txt"
 }
 
-function mk_clean_home_launcher {
+mk_clean_home_launcher() {
     # mk_clean_home_launcher app-name config-dir-name
     if [[ "$#" -eq 2 ]]; then
         LAUNCHER_NAME="$1"
@@ -135,7 +132,7 @@ function mk_clean_home_launcher {
     chmod +x "${LAUNCHER_PATH}"
 }
 
-function maybe_restore_config_file {
+maybe_restore_config_file() {
     # restore_config_file target_location
     LATEST_BACKUP_FILE=$(ls -d "$1".~*~ | sort | tail -1)
     if [[ -f "${LATEST_BACKUP_FILE}" ]]; then
@@ -144,7 +141,7 @@ function maybe_restore_config_file {
     fi
 }
 
-function get_bin_dir {
+get_bin_dir() {
     if [[ "$(have_sudo; echo $?)" -ne 1 ]]; then
         BIN_DIR=/usr/bin
     else
@@ -154,7 +151,7 @@ function get_bin_dir {
     echo $BIN_DIR
 }
 
-function pkg_mngr_update {
+pkg_mngr_update() {
     if [[ -f pkg_mngr_uptodate ]]; then
         return 0
     else
@@ -162,7 +159,7 @@ function pkg_mngr_update {
     fi
 }
 
-function try_pkg_mngr {
+try_pkg_mngr() {
     echo "Attempting to install $@ with $PKG_MNGR."
     SUDO_PREFIX=$(get_sudo_prefix)
     if [[ "$PKG_MNGR" = 'apt-get' ]]; then
@@ -185,7 +182,7 @@ function try_pkg_mngr {
     fi
 }
 
-function try_brew {
+try_brew() {
     echo "Attempting to install $@ with brew."
     have_brew || { echo "Brew not installed." && return 1; }
     brew install "$@"
@@ -197,7 +194,7 @@ function try_brew {
     fi
 }
 
-function try_pip {
+try_pip() {
     echo "Attempting to install $@ with pip."
     have_cmd pip || { echo "pip not installed." && return 1; }
     pip install --user "$@"
@@ -209,7 +206,7 @@ function try_pip {
     fi
 }
 
-function try_conda_forge {
+try_conda_forge() {
     echo "Attempting to install $@ with conda."
     have_conda || { echo "Conda not installed." && return 1; }
     if [[ "$(which mamba)" != "" ]]; then
@@ -228,7 +225,7 @@ function try_conda_forge {
 
 # try to install packages with package manager if privileges ok;
 # if fails or if no privs, try with brew and then with conda forge.
-function try_install_cascade {
+try_install_cascade() {
     notfound=($(get_nonfound_cmds "$@"))
     [[ "${#notfound[@]}" -eq 0 ]] && return 0
     have_sudo && try_pkg_mngr $notfound && return 0
@@ -242,7 +239,7 @@ function try_install_cascade {
 # available from the command line. If not return 1.
 # Else, return 0.
 # If disabled, return the output of try_install_cascade.
-function try_install_all {
+try_install_all() {
     try_install_cascade "$@"
     RV=$?
     if [[ "$2" != false ]]; then
@@ -252,7 +249,7 @@ function try_install_all {
     return $RV
 }
 
-function try_install_any {
+try_install_any() {
     RV=0
     for tool in "$@"; do
         try_install_cascade $tool || RV=1
@@ -260,7 +257,7 @@ function try_install_any {
     return $RV
 }
 
-function ensure_gcc_toolchain {
+ensure_gcc_toolchain() {
     # make sure gcc toolchain is available - attempt to install with conda-forge else
     if [[ "$(which gcc)" = '' ]] && [[ "$CC" = '' ]]; then
         try_conda_forge gcc_linux-64 && eval "$(conda shell.bash hook)" && conda deactivate && conda activate base

@@ -1,7 +1,6 @@
-source "${SCRIPT_PATH}/driver_functions.sh"
+. "${SCRIPT_PATH}/driver_functions.sh"
 
-
-function do_python_f {
+do_python_f() {
     echo "Installing miniconda3 & jupyter..."
     if [[ -d "${HOME}/miniconda3" ]]; then
         if [[ "${UPDATE_BEHAVIOUR}" = "all" ]]; then
@@ -50,8 +49,7 @@ function do_python_f {
     echo "c.TerminalInteractiveShell.editing_mode = 'vi'" >> $HOME/.ipython/profile_default/ipython_config.py
 }
 
-
-function do_brew_f {
+do_brew_f() {
     echo "Installing brew..."
     [[ "$(get_arch)" != 'amd64' ]] && errmess "Cannot install brew on non-x86_64 arch." && return 1
     ensure_gcc_toolchain || { errmess "Cannot install brew: GCC not installed." && return 1; }
@@ -64,8 +62,7 @@ function do_brew_f {
     brew install hello
 }
 
-
-function do_env_f {
+do_env_f() {
     echo "Installing ZSH environment..."
     # try install any indicated packages - zsh and git are required
     PKG_LIST="$(get_package_list env ${PKG_MNGR})"
@@ -98,8 +95,7 @@ function do_env_f {
     done < "${CONFIG_PATH}/config_mappings_no_replace.txt"
 }
 
-
-function do_vim_f {
+do_vim_f() {
     echo "Setting up Neovim..."
     try_install_cascade git  || { errmess "Git not installed." && return 1; }
     try_install_cascade curl || { errmess "Curl not installed." && return 1; }
@@ -121,8 +117,7 @@ function do_vim_f {
     fi
 }
 
-
-function do_docker_f {
+do_docker_f() {
     echo "Installing Docker..."
     SUDO_PREFIX=$(get_sudo_prefix)
     have_sudo && [[ "$PKG_MNGR" = 'apt-get' ]] || "Could not install Docker."
@@ -141,8 +136,7 @@ function do_docker_f {
     $SUDO_PREFIX usermod -aG docker $USER || true
 }
 
-
-function do_goofys_f {
+do_goofys_f() {
     echo "Installing goofys..."
     [[ "$(get_arch)" == "amd64" ]] || return 0  # x86
     GOOFYS_VERSION="v0.24.0"
@@ -151,8 +145,7 @@ function do_goofys_f {
     $SUDO_PREFIX mv goofys "$(get_bin_dir)/goofys"
 }
 
-
-function do_various_f {
+do_various_f() {
     echo "Installing various useful packages..."
     PKG_LIST="$(get_package_list various ${PKG_MNGR})"
     ALL_EXTRAS=(${PKG_LIST})
@@ -160,8 +153,7 @@ function do_various_f {
     try_install_any "${ALL_EXTRAS[@]}" || true
 }
 
-
-function do_various_pip_f {
+do_various_pip_f() {
     echo "Installing various useful packages with pip..."
     PKG_LIST="$(get_package_list various pip)"
     ALL_EXTRAS_PIP=(${PKG_LIST})
@@ -169,8 +161,7 @@ function do_various_pip_f {
     try_pip "${ALL_EXTRAS_PIP[@]}" || true
 }
 
-
-function do_extras_f {
+do_extras_f() {
     echo "Installing extra tooling..."
     #do_docker_f || true
     do_goofys_f || true
@@ -178,8 +169,7 @@ function do_extras_f {
     do_various_pip_f || true
 }
 
-
-function do_desktop_f {
+do_desktop_f() {
     echo "Installing desktop packages..."
     PKG_LIST="$(get_package_list desktop ${PKG_MNGR})"
     ALL_DESKTOP=(${PKG_LIST})

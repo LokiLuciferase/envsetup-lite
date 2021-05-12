@@ -31,7 +31,7 @@ export DEBIAN_FRONTEND="noninteractive"
 export UPDATE_BEHAVIOUR="${UPDATE_BEHAVIOUR:-configs}"  # whether to update only config files. Others: "fail" and "all"
 
 # get functionality
-source "${SCRIPT_PATH}/functions.sh"
+. "${SCRIPT_PATH}/functions.sh"
 
 # run selected
 [[ "$DO_PYTHON" = true ]] && do_python_f
