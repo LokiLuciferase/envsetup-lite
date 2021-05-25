@@ -35,7 +35,6 @@ do_python_f() {
     jupyter contrib nbextension install --sys-prefix
     jupyter nbextension enable rise --py --sys-prefix
     jupyter nbextension enable comment-uncomment/main
-    jupyter nbextension enable highlight_selected_word/main
     jupyter nbextension enable execute_time/ExecuteTime
     jupyter nbextension enable scroll_down/main
     jupyter nbextension enable code_prettify/autopep8
