@@ -9,6 +9,7 @@ htoprc .config/htop/htoprc
 ttrv.cfg .config/ttrv/ttrv.cfg
 gitconfig .gitconfig
 init.vim .config/nvim/init.vim
+alacritty .config/alacritty
 SpaceVim.d .SpaceVim.d
 ideavimrc .config/ideavim/ideavimrc
 libinput-gestures.conf .config/libinput-gestures.conf
